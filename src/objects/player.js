@@ -3,22 +3,24 @@ import Actor from './actor'
 import Camera from '../world/camera'
 
 export default class Player extends Actor {
-  constructor (props = {}) {
+  constructor (props) {
     super(props)
 
     const size = props.size || 0.3
-
     const geometry = new BoxBufferGeometry(size, size, size)
     const material = new MeshNormalMaterial()
 
     material.flatShading = true
 
     this.mesh = new Mesh(geometry, material)
+
     this.mesh.rotation.x = 35
     this.mesh.rotation.y = 20
 
     this.mesh.position.y = 3
     this.mesh.position.z = 1
+
+    this.mesh.castShadow = true
 
     this.player_v = 0
     this.camera_v = 0
@@ -31,6 +33,8 @@ export default class Player extends Actor {
 
     addEventListener('keydown', this.onKeydown.bind(this))
     addEventListener('keyup', this.onKeyUp.bind(this))
+
+    this.update = this.update.bind(this)
   }
 
   onKeydown (e) {

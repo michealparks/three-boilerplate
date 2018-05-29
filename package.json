@@ -3,29 +3,47 @@
   "version": "1.0.0",
   "description": "A three.js web app boilerplate",
   "scripts": {
-    "start": "webpack-dev-server --open"
+    "start": "NODE_ENV=production electron src/electron/index.js",
+    "dev": "NODE_ENV=development node --use-strict webpack.js",
+    "build": "NODE_ENV=production node --use-strict webpack.js",
+    "electron": "NODE_ENV=development electron src/electron/index.js"
   },
+  "sideEffects": false,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/michealparks/three-boilerplate.git"
   },
   "author": "Micheal Parks",
+  "contributors": [
+    {
+      "name": "Micheal Parks",
+      "email": "michealparks1989@gmail.com"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/michealparks/three-boilerplate/issues"
   },
   "homepage": "https://github.com/michealparks/three-boilerplate#readme",
   "devDependencies": {
-    "css-loader": "^0.28.9",
-    "html-webpack-plugin": "^2.30.1",
-    "style-loader": "^0.19.1",
-    "three": "^0.89.0",
-    "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.11.0"
+    "electron": "^2.0.2",
+    "glsl-minifier": "0.0.11",
+    "three": "^0.92.0",
+    "uglifyjs-webpack-plugin": "^1.2.5",
+    "webpack": "^4.8.3"
   },
   "standard": {
     "globals": [
-      "addEventListener"
+      "addEventListener",
+      "requestAnimationFrame",
+      "cancelAnimationFrame",
+      "__root__",
+      "__dev__",
+      "__version__",
+      "__darwin__",
+      "__linux__",
+      "__win32__",
+      "__noop__"
     ]
   }
 }

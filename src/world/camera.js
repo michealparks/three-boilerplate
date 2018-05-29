@@ -1,10 +1,14 @@
 import {PerspectiveCamera} from 'three'
 
 const Camera = new PerspectiveCamera(
-  75,                                     // Field of view
-  window.innerWidth / window.innerHeight, // Aspect ratio
-  1,                                   // Near clipping plane
-  100                                  // Far clipping plane
+  // Field of view
+  75,
+  // Aspect ratio
+  window.innerWidth / window.innerHeight,
+  // Near clipping plane
+  1,
+  // Far clipping plane
+  100
 )
 
 // Distance camera from the center of the scene.
