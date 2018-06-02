@@ -13,9 +13,9 @@ export const addActor = (actor) => {
   Scene.add(actor.mesh)
 }
 
-export const removeActors = (i) => {
-  actors.splice()
-  updatorFns.splice()
+export const removeActor = (i) => {
+  actors.splice(i, 1)
+  updatorFns.splice(i, 1)
 }
 
 export const updateActors = () => {
@@ -23,3 +23,5 @@ export const updateActors = () => {
     updatorFns[i]()
   }
 }
+
+export default {getActor, addActor, removeActor, updateActors}

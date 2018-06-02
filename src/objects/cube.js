@@ -11,6 +11,7 @@ export default class Cube extends Actor {
       new BoxGeometry(size, size, size),
       new MeshNormalMaterial())
   }
+
   update () {
     super.update()
   }

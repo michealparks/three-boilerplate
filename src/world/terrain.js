@@ -13,19 +13,21 @@ const material = new MeshPhongMaterial({
   // Emissive color of the material (dark)
   emissive: 0xFF4E50,
   // How shiny the specular highlight is
-  shininess: 30
+  shininess: 30,
+
+  flatShading: true
 })
 
-material.flatShading = true
+const n = 100
 
 // Create a geometry with N segments.
-const geometry = new PlaneGeometry(30, 30, 30, 30)
+const geometry = new PlaneGeometry(n, n, n, n)
 
 // Move the vertices by random.
 for (let i = geometry.vertices.length - 1; i > -1; i -= 1) {
-  geometry.vertices[i].x += (-0.5 + Math.random())
-  geometry.vertices[i].y += (-0.5 + Math.random())
-  geometry.vertices[i].z += (-0.5 + Math.random() * 1.5)
+  geometry.vertices[i].x += (-0.001 + Math.random() / 2)
+  geometry.vertices[i].y += (-0.001 + Math.random() / 2)
+  geometry.vertices[i].z += (-0.001 + Math.random() / 2 * 1.5)
 }
 
 // Update geometry.
@@ -36,6 +38,7 @@ export const plane = new Mesh(geometry, material)
 
 // Make static
 plane.matrixAutoUpdate = false
+plane.recieveShadow = true
 
 // Create a wireframe
 export const wireframe = new Mesh(geometry, new MeshBasicMaterial({

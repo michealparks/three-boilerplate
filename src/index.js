@@ -12,7 +12,10 @@ const toggle = (p = !isPaused) => {
   return isPaused ? pauseFrames() : playFrames()
 }
 
-addActor(new Player({}))
+for (let i = 1; i < 300; i++) {
+  addActor(new Player({x: i / 2, y: i / 2, z: i / 2}))
+}
+
 playFrames()
 
 // new Actor({

@@ -1,4 +1,7 @@
 require('./globals')
+
+if (__dev__) require('../../webpack')
+
 const electron = require('electron')
 const {format} = require('url')
 const {resolve} = require('path')
@@ -8,6 +11,7 @@ const {app, BrowserWindow} = electron
 const onFatalCrash = (e) => {
   if (__dev__) console.error(e.stack)
 
+  process.exit(1)
   // TODO
 }
 

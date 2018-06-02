@@ -1,6 +1,6 @@
 import {BoxBufferGeometry, MeshNormalMaterial, Mesh} from 'three'
 import Actor from './actor'
-import Camera from '../world/camera'
+// import Camera from '../world/camera'
 
 export default class Player extends Actor {
   constructor (props) {
@@ -17,8 +17,7 @@ export default class Player extends Actor {
     this.mesh.rotation.x = 35
     this.mesh.rotation.y = 20
 
-    this.mesh.position.y = 3
-    this.mesh.position.z = 1
+    this.mesh.position.set(props.x || 0, props.y || 0, props.z || 0)
 
     this.mesh.castShadow = true
 
@@ -31,8 +30,8 @@ export default class Player extends Actor {
 
     this.speed = 25
 
-    addEventListener('keydown', this.onKeydown.bind(this))
-    addEventListener('keyup', this.onKeyUp.bind(this))
+    // \\addEventListener('keydown', this.onKeydown.bind(this))
+    // \\addEventListener('keyup', this.onKeyUp.bind(this))
 
     this.update = this.update.bind(this)
   }
@@ -71,14 +70,18 @@ export default class Player extends Actor {
   update () {
     super.update()
 
-    this.mesh.position.x += this.player_v
-    this.mesh.rotation.z += this.rotator
-    Camera.position.x += this.camera_v
-    Camera.position.z += this.camera_z
+    this.mesh.rotation.x += 0.01
+    this.mesh.rotation.y += 0.01
+    this.mesh.rotation.z += 0.01
 
-    this.player_v += this.catchup(this.v, this.player_v)
-    this.camera_v += this.catchup(this.player_v, this.camera_v)
-    this.camera_z += this.catchup(this.z, this.camera_z)
-    this.rotator += this.slowRotator()
+    // this.mesh.position.x += this.player_v
+    // this.mesh.rotation.z += this.rotator
+    // Camera.position.x += this.camera_v
+    // Camera.position.z += this.camera_z
+
+    // this.player_v += this.catchup(this.v, this.player_v)
+    // this.camera_v += this.catchup(this.player_v, this.camera_v)
+    // this.camera_z += this.catchup(this.z, this.camera_z)
+    // this.rotator += this.slowRotator()
   }
 }

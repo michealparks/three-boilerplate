@@ -1,26 +1,45 @@
 import {WebGLRenderer} from 'three'
-import Camera from './camera'
+import CameraPivot from './camera'
 import Scene from './scene'
 import {updateActors} from './actors'
 
-const renderer = new WebGLRenderer({
+const [Camera] = CameraPivot.children
+const {update} = CameraPivot
+
+const Renderer = new WebGLRenderer({
   canvas: document.getElementById('canvas'),
   antialias: true
 })
 
-const render = renderer.render.bind(renderer)
+Renderer.shadowMap.enabled = true
 
-let id
+const render = Renderer.render.bind(Renderer)
 
-renderer.setSize(window.innerWidth, window.innerHeight)
-renderer.setPixelRatio(window.devicePixelRatio / 2)
-renderer.setClearColor('#000', 1.0)
+let id, RAFid
 
-document.body.appendChild(renderer.domElement)
+Renderer.setSize(window.innerWidth, window.innerHeight)
+Renderer.setPixelRatio(window.devicePixelRatio / 1.5)
+Renderer.setClearColor('#000', 1.0)
+
+Scene.add(CameraPivot)
+
+addEventListener('resize', (e) => {
+  if (!RAFid) {
+    RAFid = requestAnimationFrame(onResize)
+  }
+})
+
+const onResize = () => {
+  Camera.aspect = window.innerWidth / window.innerHeight
+  Camera.updateProjectionMatrix()
+  Renderer.setSize(window.innerWidth, window.innerHeight)
+  RAFid = null
+}
 
 export const playFrames = (actors) => {
   id = requestAnimationFrame(playFrames)
   updateActors()
+  update()
   render(Scene, Camera)
 }
 
