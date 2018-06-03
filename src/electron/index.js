@@ -31,16 +31,18 @@ if (shouldQuit) {
 
     const win = new BrowserWindow({
       title: '',
-      x: bounds.x + 100,
-      y: bounds.y + 100,
+      center: true,
       width: bounds.width - 200,
       height: bounds.height - 200,
+      minWidth: bounds.width / 2,
+      minHeight: bounds.height * (3/4),
       show: false,
       webPreferences: {
         backgroundThrottling: false
       }
     })
 
+    win.setMenuBarVisibility(false)
     win.once('ready-to-show', win.show)
 
     win.loadURL(format({

@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "A three.js web app boilerplate",
   "scripts": {
-    "start": "NODE_ENV=production electron src/electron/index.js",
-    "dev": "NODE_ENV=development node --use-strict webpack.js",
-    "build": "NODE_ENV=production node --use-strict webpack.js",
-    "electron": "NODE_ENV=development electron src/electron/index.js"
+    "start": "cross-env NODE_ENV=production electron src/electron/index.js",
+    "dev": "cross-env NODE_ENV=development node --use-strict webpack.js",
+    "build": "cross-env NODE_ENV=production node --use-strict webpack.js",
+    "electron": "cross-env NODE_ENV=development electron src/electron/index.js"
   },
   "sideEffects": false,
   "repository": {
@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/michealparks/three-boilerplate#readme",
   "devDependencies": {
+    "cross-env": "^5.1.6",
     "electron": "^2.0.2",
     "glsl-minifier": "0.0.11",
     "three": "^0.93.0",

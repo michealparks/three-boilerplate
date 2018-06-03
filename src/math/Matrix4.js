@@ -108,6 +108,10 @@ export default class Matrix4 {
     return this.multiplyMatrices(this, m)
   }
 
+  premultiply (m) {
+    return this.multiplyMatrices(m, this)
+  }
+
   multiplyMatrices (a, b) {
     const te = this.elements
 

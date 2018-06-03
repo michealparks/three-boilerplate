@@ -18,20 +18,10 @@ for (let i = 1; i < 300; i++) {
 
 playFrames()
 
-// new Actor({
-//   json: 'head',
-//   onReady: (actor) => addActor(actor)
-// })
-
 document.addEventListener('visibilitychange', () => {
-  switch (document.visibilityState) {
-    case 'visible': return toggle(false)
-    case 'hidden': return toggle(true)
-  }
+  toggle(document.visibilityState === 'hidden')
 })
 
-addEventListener('keydown', (e) => {
-  switch (e.keyCode) {
-    case 80: return toggle()
-  }
+addEventListener('keydown', ({keyCode}) => {
+  if (keyCode === 80) toggle()
 })
