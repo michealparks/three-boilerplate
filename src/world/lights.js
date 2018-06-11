@@ -5,11 +5,12 @@ import {
 } from 'three'
 
 import {
-  TO_RAD,
   COLOR_SUNLIGHT,
   SIZE_MAP,
   SIZE_SHADOW_MAP
 } from '../util/constants'
+
+import {DEG2RAD} from '../math'
 
 import state from '../state'
 
@@ -26,7 +27,7 @@ sun.shadow.camera.top = SIZE_MAP / 2
 sun.shadow.camera.bottom = -SIZE_MAP / 2
 
 sun.position.set(0, 0, (SIZE_MAP / 3))
-sun.rotation.set(-90 * TO_RAD, 0, 0)
+sun.rotation.set(-90 * DEG2RAD, 0, 0)
 
 sun.update = () => {
   sun.rotateX(0.01)

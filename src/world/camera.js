@@ -1,10 +1,15 @@
-import {PerspectiveCamera, Group, Matrix4} from 'three'
-// import Matrix4 from '../math/Matrix4'
-import {TO_RAD} from '../util/constants'
+import {
+  PerspectiveCamera,
+  Group,
+  Matrix4
+} from 'three'
 
-const CameraPivot = new Group()
+import {DEG2RAD} from '../math'
 
-const Camera = new PerspectiveCamera(
+const cameraPivot = new Group()
+cameraPivot.matrixAutoUpdate = false
+
+const camera = new PerspectiveCamera(
   // Field of view
   50,
   // Aspect ratio
@@ -14,11 +19,9 @@ const Camera = new PerspectiveCamera(
   // Far clipping plane
   500
 )
+camera.matrixAutoUpdate = false
 
-CameraPivot.add(Camera)
-
-CameraPivot.matrixAutoUpdate = false
-Camera.matrixAutoUpdate = false
+cameraPivot.add(camera)
 
 const rotateSpeed = 0.5
 const speed = 10
@@ -31,21 +34,21 @@ let dz = 0
 let dr = 0
 
 // Distance camera from the center of the scene.
-CameraPivot.position.set(0, 0, 4)
-Camera.rotation.set(55 * TO_RAD, 0, 0)
-Camera.position.set(0, -radius, 0)
+cameraPivot.position.set(0, 0, 4)
+camera.rotation.set(55 * DEG2RAD, 0, 0)
+camera.position.set(0, -radius, 0)
 
-CameraPivot.updateMatrix()
-Camera.updateMatrix()
+cameraPivot.updateMatrix()
+camera.updateMatrix()
 
 const rotateMatrix = new Matrix4()
 const translateMatrix = new Matrix4()
 
-CameraPivot.update = () => {
+cameraPivot.update = () => {
   if (dx !== 0 || dy !== 0 || dz !== 0 || dr !== 0) {
-    Camera.applyMatrix(rotateMatrix.makeRotationZ(dr * TO_RAD))
+    camera.applyMatrix(rotateMatrix.makeRotationZ(dr * DEG2RAD))
 
-    const {z} = Camera.rotation
+    const {z} = camera.rotation
     const cosZ = cos(z)
     const sinZ = sin(z)
 
@@ -56,9 +59,9 @@ CameraPivot.update = () => {
       0, 0, 0, 1
     )
 
-    CameraPivot.applyMatrix(translateMatrix)
-    CameraPivot.updateMatrix()
-    Camera.updateMatrix()
+    cameraPivot.applyMatrix(translateMatrix)
+    cameraPivot.updateMatrix()
+    camera.updateMatrix()
   }
 }
 
@@ -114,4 +117,4 @@ if ('onwheel' in window) {
   })
 }
 
-export default CameraPivot
+export default cameraPivot

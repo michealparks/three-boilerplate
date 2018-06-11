@@ -1,4 +1,4 @@
-import Scene from './scene'
+import scene from './scene'
 
 const actors = []
 const updatorFns = []
@@ -10,7 +10,7 @@ export const getActor = (i) => {
 export const addActor = (actor) => {
   actors.push(actor)
   updatorFns.push(actor.update)
-  Scene.add(actor.mesh)
+  scene.add(actor.mesh)
 }
 
 export const removeActor = (i) => {
@@ -23,5 +23,3 @@ export const updateActors = () => {
     updatorFns[i]()
   }
 }
-
-export default {getActor, addActor, removeActor, updateActors}
