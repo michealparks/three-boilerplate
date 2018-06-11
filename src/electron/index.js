@@ -23,6 +23,7 @@ const shouldQuit = app.makeSingleInstance(__noop__)
 if (shouldQuit) {
   app.quit()
 } else {
+  app.commandLine.appendSwitch('enable-precise-memory-info')
   app.commandLine.appendSwitch('disable-renderer-backgrounding')
   app.commandLine.appendSwitch('js-flags', '--use_strict')
 
@@ -35,7 +36,7 @@ if (shouldQuit) {
       width: bounds.width - 200,
       height: bounds.height - 200,
       minWidth: bounds.width / 2,
-      minHeight: bounds.height * (3/4),
+      minHeight: bounds.height * 3 / 4,
       show: false,
       webPreferences: {
         backgroundThrottling: false

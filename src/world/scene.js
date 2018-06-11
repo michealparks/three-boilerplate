@@ -1,18 +1,21 @@
 import {Scene, AxesHelper} from 'three'
-import {plane, wireframe} from './terrain'
-import {directionalLight} from './lights'
+import terrain from './terrain'
+import {sun, sunHelper, sunShadowHelper} from './lights'
 import CameraPivot from './camera'
+import sky from './sky'
 
 const scene = new Scene()
 
 if (__dev__) {
   // x = red, y = green, z = blue
-  scene.add(new AxesHelper(5))
+  // scene.add(new AxesHelper(100))
 }
 
 scene.add(CameraPivot)
-scene.add(wireframe)
-scene.add(plane)
-scene.add(directionalLight)
+scene.add(sky)
+scene.add(terrain)
+scene.add(sun)
+// scene.add(sunHelper)
+// scene.add(sunShadowHelper)
 
 export default scene

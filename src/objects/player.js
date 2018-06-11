@@ -1,4 +1,9 @@
-import {BoxBufferGeometry, MeshNormalMaterial, Mesh} from 'three'
+import {
+  BoxBufferGeometry,
+  MeshPhongMaterial,
+  Mesh
+} from 'three'
+import {COLOR_ROCK} from '../util/constants'
 import Actor from './actor'
 // import Camera from '../world/camera'
 
@@ -8,9 +13,13 @@ export default class Player extends Actor {
 
     const size = props.size || 0.3
     const geometry = new BoxBufferGeometry(size, size, size)
-    const material = new MeshNormalMaterial()
-
-    material.flatShading = true
+    const material = new MeshPhongMaterial({
+      color: COLOR_ROCK,
+      specular: COLOR_ROCK,
+      emissive: COLOR_ROCK,
+      shininess: 20,
+      flatShading: true
+    })
 
     this.mesh = new Mesh(geometry, material)
 
@@ -29,6 +38,10 @@ export default class Player extends Actor {
     this.camera_z = 0
 
     this.speed = 25
+
+    this.vx = Math.random() / 20
+    this.vy = Math.random() / 20
+    this.vz = Math.random() / 20
 
     // \\addEventListener('keydown', this.onKeydown.bind(this))
     // \\addEventListener('keyup', this.onKeyUp.bind(this))
@@ -70,9 +83,9 @@ export default class Player extends Actor {
   update () {
     super.update()
 
-    this.mesh.rotation.x += 0.01
-    this.mesh.rotation.y += 0.01
-    this.mesh.rotation.z += 0.01
+    this.mesh.rotation.x += this.vx
+    this.mesh.rotation.y += this.vy
+    this.mesh.rotation.z += this.vz
 
     // this.mesh.position.x += this.player_v
     // this.mesh.rotation.z += this.rotator

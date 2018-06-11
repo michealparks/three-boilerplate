@@ -1,7 +1,6 @@
-import './utils/boilerplate'
+import './util/boilerplate'
 import Player from './objects/player'
-import Actor from './objects/actor'
-
+import {SIZE_MAP} from './util/constants'
 import {playFrames, pauseFrames} from './world/renderer'
 import {addActor} from './world/actors'
 
@@ -12,12 +11,6 @@ const toggle = (p = !isPaused) => {
   return isPaused ? pauseFrames() : playFrames()
 }
 
-for (let i = 1; i < 300; i++) {
-  addActor(new Player({x: i / 2, y: i / 2, z: i / 2}))
-}
-
-playFrames()
-
 document.addEventListener('visibilitychange', () => {
   toggle(document.visibilityState === 'hidden')
 })
@@ -25,3 +18,13 @@ document.addEventListener('visibilitychange', () => {
 addEventListener('keydown', ({keyCode}) => {
   if (keyCode === 80) toggle()
 })
+
+for (let i = 1; i < 500; i++) {
+  addActor(new Player({
+    x: (Math.random() * SIZE_MAP) - (SIZE_MAP / 2),
+    y: (Math.random() * SIZE_MAP) - (SIZE_MAP / 2),
+    z: Math.random() + 2
+  }))
+}
+
+playFrames()

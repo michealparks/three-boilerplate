@@ -1,4 +1,9 @@
-import {BoxGeometry, MeshNormalMaterial, Mesh} from 'three'
+import {
+  BoxGeometry,
+  MeshNormalMaterial,
+  Mesh
+} from 'three'
+
 import Actor from './actor'
 
 export default class Cube extends Actor {

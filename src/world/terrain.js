@@ -1,19 +1,20 @@
 import {
   MeshPhongMaterial,
-  MeshBasicMaterial,
   Mesh,
-  PlaneGeometry,
   PlaneBufferGeometry,
   BufferAttribute
 } from 'three'
 
-import {MAP_SIZE, COLOR_MOON} from './state'
+import {
+  NUM_MAP_TILES,
+  SIZE_MAP,
+  COLOR_MOON
+} from '../util/constants'
 
-const {floor, random} = Math
+import SimplexNoise from 'simplex-noise'
 
-const numCraters = 40
-const widthSegments = 400
-const heightSegments = 400
+const simplex = new SimplexNoise(Math.random())
+const noise2D = simplex.noise2D.bind(simplex)
 
 const material = new MeshPhongMaterial({
   // Specular color of the material (light)
@@ -23,47 +24,45 @@ const material = new MeshPhongMaterial({
   // Emissive color of the material (dark)
   emissive: COLOR_MOON,
   // How shiny the specular highlight is
-  shininess: 30,
+  shininess: 20,
 
   flatShading: true
 })
 
-const n = 100
-
 // Create a geometry with N segments.
-const geometry = new PlaneGeometry(MAP_SIZE, MAP_SIZE, widthSegments, heightSegments)
+const geometry = new PlaneBufferGeometry(
+  SIZE_MAP, SIZE_MAP, NUM_MAP_TILES, NUM_MAP_TILES)
 
-const l = geometry.vertices.length
+const vertices = new Float32Array(geometry.getAttribute('position').array)
 
-// Move the vertices by random.
-for (let i = geometry.vertices.length - 1; i > -1; i -= 1) {
-  geometry.vertices[i].x += (-0.001 + Math.random() / 5)
-  geometry.vertices[i].y += (-0.001 + Math.random() / 5)
-  geometry.vertices[i].z += (-0.001 + Math.random() / 5 * 1.5)
+const SCALE = 0.01
+const FREQ = 1.1
+const ELEVATION_SCALE = 1.6
+
+for (let i = 0, l = vertices.length; i < l; i += 3) {
+  const x = i % NUM_MAP_TILES
+  const y = Math.floor(i / NUM_MAP_TILES)
+  const elevation = ELEVATION_SCALE * (
+    FREQ * 1.000 * noise2D(FREQ * SCALE * x, FREQ * SCALE * y) +
+    FREQ * 0.500 * noise2D(FREQ * 2 * SCALE * x, FREQ * 2 * SCALE * y) +
+    FREQ * 0.250 * noise2D(FREQ * 4 * SCALE * x, FREQ * 4 * SCALE * y) +
+    FREQ * 0.125 * noise2D(FREQ * 8 * SCALE * x, FREQ * 8 * SCALE * y)
+  )
+
+  vertices[i - 1] = (elevation < 0 ? 0 : elevation) + Math.random() * (SCALE * 4)
 }
 
-for (let i = 0; i < numCraters; i++) {
-  const x = floor(random() * l)
-
-    geometry.vertices[x].x += (Math.random() * 2)
-    geometry.vertices[x].y += (Math.random() * 2)
-    geometry.vertices[x].z += (Math.random() * 2)
-}
-
-
+geometry.addAttribute('position', new BufferAttribute(vertices, 3))
 
 // Update geometry.
+geometry.computeVertexNormals()
 geometry.computeFaceNormals()
 
 // Create plane
-export const plane = new Mesh(geometry, material)
+const plane = new Mesh(geometry, material)
 
 // Make static
 plane.matrixAutoUpdate = false
-plane.recieveShadow = true
+plane.receiveShadow = true
 
-// Create a wireframe
-export const wireframe = new Mesh(geometry, new MeshBasicMaterial({
-  color: COLOR_MOON,
-  wireframe: true
-}))
+export default plane

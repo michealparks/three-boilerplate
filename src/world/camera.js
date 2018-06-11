@@ -1,11 +1,12 @@
-import {PerspectiveCamera, Group} from 'three'
-import Matrix4 from '../math/Matrix4'
+import {PerspectiveCamera, Group, Matrix4} from 'three'
+// import Matrix4 from '../math/Matrix4'
+import {TO_RAD} from '../util/constants'
 
 const CameraPivot = new Group()
 
 const Camera = new PerspectiveCamera(
   // Field of view
-  75,
+  50,
   // Aspect ratio
   window.innerWidth / window.innerHeight,
   // Near clipping plane
@@ -22,8 +23,7 @@ Camera.matrixAutoUpdate = false
 const rotateSpeed = 0.5
 const speed = 10
 const radius = 5
-const {PI, sin, cos} = Math
-const TO_RAD = PI / 180
+const {sin, cos} = Math
 
 let dx = 0
 let dy = 0
@@ -97,13 +97,11 @@ addEventListener('keyup', (e) =>
   toggleMovementInput(e.keyCode, false))
 
 if ('onwheel' in window) {
-  let timestamp = 0
   let timeoutID = -1
   let inputCode = 0
-  console.log('yes')
+
   addEventListener('wheel', (e) => {
     inputCode = e.deltaY > 0 ? 82 : 70
-    timestamp = Date.now()
     toggleMovementInput(inputCode, true)
 
     if (timeoutID !== -1) {
