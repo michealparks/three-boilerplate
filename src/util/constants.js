@@ -6,7 +6,9 @@ export const COLOR_SUNLIGHT = 0xFAD6A5
 // Brightness
 
 // Terrain
-export const NUM_MAP_TILES = 800
+// has a large impact on performance,
+// especially when raytracing clicks
+export const NUM_MAP_TILES = 500
 export const NUM_CRATERS = 40
 export const SIZE_MAP = NUM_MAP_TILES / 2
 export const SIZE_MAP_TILE = SIZE_MAP / NUM_MAP_TILES

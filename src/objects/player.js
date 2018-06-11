@@ -29,6 +29,7 @@ export default class Player extends Actor {
     this.mesh.position.set(props.x || 0, props.y || 0, props.z || 0)
 
     this.mesh.castShadow = true
+    this.mesh.userData.isClickable = true
 
     this.player_v = 0
     this.camera_v = 0

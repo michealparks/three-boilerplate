@@ -14,7 +14,7 @@ import {
 
 import SimplexNoise from 'simplex-noise'
 
-const simplex = new SimplexNoise(Math.random())
+const simplex = new SimplexNoise()
 const noise2D = simplex.noise2D.bind(simplex)
 
 const material = new MeshPhongMaterial({
@@ -35,20 +35,24 @@ const material = new MeshPhongMaterial({
 //   SIZE_MAP, SIZE_MAP, NUM_MAP_TILES, NUM_MAP_TILES)
 
 const geometry = new SphereBufferGeometry(
-   // Radius
+  // Radius
   SIZE_MAP / 2,
   // Width segments
   NUM_MAP_TILES,
   // Height segments
   NUM_MAP_TILES,
-  // horizontal starting angle
-  0,
-  // horizontal sweep angle size
-  Math.PI,
-  // vertical starting angle
-  0,
-  // vertical sweep angle size
-  Math.PI
+  // phiStart: horizontal starting angle
+  // Default - 0
+  Math.PI / 4,
+  // phiLength: horizontal sweep angle size
+  // Default - PI * 2
+  Math.PI / 2,
+  // thetaStart: vertical starting angle
+  // Default - 0
+  Math.PI / 4,
+  // Default - PI
+  // thetaLength: vertical sweep angle size
+  Math.PI / 2
 )
 
 const vertices = new Float32Array(geometry.getAttribute('position').array)
@@ -56,8 +60,6 @@ const vertices = new Float32Array(geometry.getAttribute('position').array)
 const SCALE = 0.01
 const FREQ = 1.1
 const ELEVATION_SCALE = 1.6
-
-console.log(vertices.length)
 
 for (let i = 2, l = vertices.length; i < l; i += 3) {
   const x = i % NUM_MAP_TILES
@@ -69,7 +71,7 @@ for (let i = 2, l = vertices.length; i < l; i += 3) {
     FREQ * 0.125 * noise2D(FREQ * 8 * SCALE * x, FREQ * 8 * SCALE * y)
   )
 
-  vertices[i] += (elevation < 0 ? 0 : elevation) + Math.random() * (SCALE * 4)
+  vertices[i] += (elevation < -0.5 ? -0.5 : elevation) + Math.random() * (SCALE * 4)
 }
 
 geometry.addAttribute('position', new BufferAttribute(vertices, 3))
@@ -87,5 +89,6 @@ plane.updateMatrix()
 // Make static
 plane.matrixAutoUpdate = false
 plane.receiveShadow = true
+plane.userData.isClickable = false
 
 export default plane

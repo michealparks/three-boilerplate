@@ -3,6 +3,7 @@ import Player from './objects/player'
 import {SIZE_MAP} from './util/constants'
 import {playFrames, pauseFrames} from './world/renderer'
 import {addActor} from './world/actors'
+import {findIntersectObjects} from './world/input'
 
 let isPaused = false
 
@@ -28,3 +29,24 @@ for (let i = 1; i < 500; i++) {
 }
 
 playFrames()
+
+addEventListener('mousedown', (e) => {
+  const intersects = findIntersectObjects(e)
+
+  console.log(intersects.length)
+  for (let i = 0, l = intersects.length; i < l; i++) {
+    if (intersects[i].object.userData.isClickable) {
+      return onObjectClick(intersects[i].object)
+    }
+  }
+
+  return onNoObjectClick()
+}, false)
+
+const onObjectClick = (object) => {
+  console.log(object)
+}
+
+const onNoObjectClick = () => {
+  console.log('no object')
+}

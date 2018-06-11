@@ -53,7 +53,7 @@ if (shouldQuit) {
     }))
 
     if (__dev__) {
-      win.openDevTools({mode: 'detach'})
+      win.openDevTools(/* {mode: 'detach'} */)
     }
   })
 }

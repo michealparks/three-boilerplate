@@ -6,10 +6,10 @@ import {
 
 import {DEG2RAD} from '../math'
 
-const cameraPivot = new Group()
+export const cameraPivot = new Group()
 cameraPivot.matrixAutoUpdate = false
 
-const camera = new PerspectiveCamera(
+export const camera = new PerspectiveCamera(
   // Field of view
   50,
   // Aspect ratio
