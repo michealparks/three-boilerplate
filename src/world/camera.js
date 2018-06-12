@@ -5,9 +5,11 @@ import {
 } from 'three'
 
 import {DEG2RAD} from '../math'
+import state from '../state'
 
 export const cameraPivot = new Group()
 cameraPivot.matrixAutoUpdate = false
+cameraPivot.userData.isClickable = false
 
 export const camera = new PerspectiveCamera(
   // Field of view
@@ -17,7 +19,7 @@ export const camera = new PerspectiveCamera(
   // Near clipping plane
   0.1,
   // Far clipping plane
-  500
+  600
 )
 camera.matrixAutoUpdate = false
 
@@ -93,11 +95,57 @@ const toggleMove = (x, y, r, z, isDown) => {
   if (r !== 0) dr = isDown ? (r / rotateSpeed) : 0
 }
 
+// Keyboard handlers
 addEventListener('keydown', (e) =>
   toggleMovementInput(e.keyCode, true))
 
 addEventListener('keyup', (e) =>
   toggleMovementInput(e.keyCode, false))
+
+// Mouse handlers
+let lastScreenX = 0.0
+let lastScreenY = 0.0
+let deltaX = 0.0
+let deltaY = 0.0
+
+const onLeftMouseMove = ({clientX, clientY}) => {
+  deltaX = clientX - lastScreenX
+  deltaY = clientY - lastScreenY
+  lastScreenX = clientX
+  lastScreenY = clientY
+  toggleMove(-deltaX / 8, deltaY / 8, 0, 0, true)
+}
+
+const onRightMouseMove = ({clientX}) => {
+  deltaX = clientX - lastScreenX
+  lastScreenX = clientX
+  toggleMove(0, 0, deltaX / 16, 0, true)
+}
+
+addEventListener('mousedown', ({which, clientX, clientY}) => {
+  if (which === 1) {
+    lastScreenX = clientX
+    lastScreenY = clientY
+    state.isLeftMouseDown = true
+    addEventListener('mousemove', onLeftMouseMove)
+  } else if (which === 3) {
+    lastScreenX = clientX
+    state.isRightMouseDown = true
+    addEventListener('mousemove', onRightMouseMove)
+  }
+})
+
+addEventListener('mouseup', ({which}) => {
+  if (which === 1) {
+    state.isLeftMouseDown = false
+    toggleMove(1, 1, 0, 0, false)
+    removeEventListener('mousemove', onLeftMouseMove)
+  } else if (which === 3) {
+    state.isRightMouseDown = true
+    toggleMove(0, 0, 1, 0, false)
+    removeEventListener('mousemove', onRightMouseMove)
+  }
+})
 
 if ('onwheel' in window) {
   let timeoutID = -1
@@ -116,5 +164,10 @@ if ('onwheel' in window) {
     }, 250)
   })
 }
+
+// Gamepad handlers
+addEventListener('gamepadconnected', (e) => {
+
+})
 
 export default cameraPivot

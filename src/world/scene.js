@@ -14,7 +14,7 @@ if (__dev__) {
 scene.add(cameraPivot)
 scene.add(terrain)
 scene.add(sun)
-// scene.add(sky)w
+scene.add(sky)
 // scene.add(sunHelper)
 // scene.add(sunShadowHelper)
 

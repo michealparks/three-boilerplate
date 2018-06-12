@@ -1,7 +1,6 @@
 import {
   MeshPhongMaterial,
   Mesh,
-  PlaneBufferGeometry,
   SphereBufferGeometry,
   BufferAttribute
 } from 'three'
@@ -30,10 +29,6 @@ const material = new MeshPhongMaterial({
   flatShading: true
 })
 
-// Create a geometry with N segments.
-// const geometry = new PlaneBufferGeometry(
-//   SIZE_MAP, SIZE_MAP, NUM_MAP_TILES, NUM_MAP_TILES)
-
 const geometry = new SphereBufferGeometry(
   // Radius
   SIZE_MAP / 2,
@@ -58,8 +53,8 @@ const geometry = new SphereBufferGeometry(
 const vertices = new Float32Array(geometry.getAttribute('position').array)
 
 const SCALE = 0.01
-const FREQ = 1.1
-const ELEVATION_SCALE = 1.6
+const FREQ = 1
+const ELEVATION_SCALE = 1
 
 for (let i = 2, l = vertices.length; i < l; i += 3) {
   const x = i % NUM_MAP_TILES
@@ -71,7 +66,19 @@ for (let i = 2, l = vertices.length; i < l; i += 3) {
     FREQ * 0.125 * noise2D(FREQ * 8 * SCALE * x, FREQ * 8 * SCALE * y)
   )
 
-  vertices[i] += (elevation < -0.5 ? -0.5 : elevation) + Math.random() * (SCALE * 4)
+  const scaledElevation = elevation < 0 ? 0 : elevation
+
+  vertices[i] += scaledElevation
+
+  if (scaledElevation !== 0) {
+    vertices[i + 0] += (Math.random() - 0.5) / 4
+    vertices[i + 1] += (Math.random() - 0.5) / 4
+    vertices[i + 2] += (Math.random() - 0.5) / 4
+  } else {
+    vertices[i + 0] += (Math.random() - 0.5) / 20
+    vertices[i + 1] += (Math.random() - 0.5) / 20
+    vertices[i + 2] += (Math.random() - 0.5) / 20
+  }
 }
 
 geometry.addAttribute('position', new BufferAttribute(vertices, 3))

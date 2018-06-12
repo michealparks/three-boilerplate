@@ -35,6 +35,7 @@
   "standard": {
     "globals": [
       "addEventListener",
+      "removeEventListener",
       "requestAnimationFrame",
       "cancelAnimationFrame",
       "__root__",

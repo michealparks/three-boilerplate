@@ -18,6 +18,7 @@ export const sun = new DirectionalLight(COLOR_SUNLIGHT, state.sunBrightness)
 export const sunHelper = new DirectionalLightHelper(sun, /* length */ 20)
 
 // https://threejs.org/docs/#api/lights/shadows/DirectionalLightShadow
+sun.userData.isClickable = false
 sun.castShadow = true
 sun.shadow.mapSize.width = SIZE_SHADOW_MAP
 sun.shadow.mapSize.height = SIZE_SHADOW_MAP
