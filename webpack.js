@@ -1,6 +1,6 @@
 const {resolve} = require('path')
 const webpack = require('webpack')
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const __dev__ = process.env.NODE_ENV === 'development'
 
 const config = {
@@ -16,7 +16,29 @@ const config = {
         use: {loader: resolve(__dirname, 'bin/loaders/glsl.js')}
       }, {
         test: /\.js$/,
-        use: {loader: resolve(__dirname, 'bin/loaders/use-strict.js')}
+        include: /src|node_modules\/three/,
+        use: [
+          {
+            loader: resolve(__dirname, 'bin/loaders/use-strict.js')
+          }, {
+            loader: 'babel-loader',
+            options: {
+              plugins: [
+                ['transform-react-jsx', {pragma: 'h', useBuiltIns: true}],
+                ['transform-react-constant-elements', {allowMutablePropsOnTags: []}],
+                'syntax-jsx'
+              ],
+              // presets: __dev__ ? [] : [['minify', {
+              //   booleans: false,
+              //   infinity: false,
+              //   removeConsole: true,
+              //   removeDebugger: true,
+              //   simplifyComparisons: false,
+              //   undefinedToVoid: false
+              // }]]
+            }
+          }
+        ]
       }, {
         test: /\.wasm$/,
         use: {loader: resolve(__dirname, 'bin/loaders/wasm.js')}
@@ -27,7 +49,7 @@ const config = {
     path: resolve(__dirname, 'public'),
     filename: '[name].js'
   },
-  devtool: 'inline-source-map',
+  devtool: __dev__ ? 'inline-source-map' : false,
   plugins: [
     new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.NamedModulesPlugin(),
@@ -42,16 +64,23 @@ const config = {
       '__noop__': '() => {}'
     })
   ].concat(__dev__ ? [] : [
-    new UglifyJSPlugin({
+    new UglifyJsPlugin({
       parallel: true,
-      extractComments: true,
-      uglifyOptions: {ie8: false, ecma: 6}
+      uglifyOptions: {
+        ecma: 6,
+        warnings: true,
+        compress: {
+          drop_console: true,
+          ecma: 6,
+          keep_infinity: true,
+          toplevel: true // investigate
+        }
+      }
     })
   ]),
   resolve: {
     alias: {
       three$: resolve(__dirname, 'node_modules/three/src/Three.js')
-      // math$: resolve(__dirname, '')
     }
   }
 }

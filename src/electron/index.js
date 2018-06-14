@@ -38,6 +38,7 @@ if (shouldQuit) {
       minWidth: bounds.width / 2,
       minHeight: bounds.height * 3 / 4,
       show: false,
+      titleBarStyle: 'hidden',
       webPreferences: {
         backgroundThrottling: false
       }

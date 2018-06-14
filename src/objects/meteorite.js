@@ -1,5 +1,6 @@
 import {
-  BoxBufferGeometry,
+  SphereBufferGeometry,
+  BufferAttribute,
   MeshPhongMaterial,
   Mesh
 } from 'three'
@@ -7,12 +8,18 @@ import {COLOR_ROCK} from '../util/constants'
 import Actor from './actor'
 // import Camera from '../world/camera'
 
-export default class Player extends Actor {
+export default class Meteorite extends Actor {
   constructor (props) {
     super(props)
 
-    const size = props.size || 0.3
-    const geometry = new BoxBufferGeometry(size, size, size)
+    const radius = props.size || 0.3
+    const segments = 4
+    const geometry = new SphereBufferGeometry(
+      /* radius         */ radius,
+      /* widthSegments  */ segments,
+      /* heightSegments */ segments
+    )
+
     const material = new MeshPhongMaterial({
       color: COLOR_ROCK,
       specular: COLOR_ROCK,
@@ -22,14 +29,24 @@ export default class Player extends Actor {
     })
 
     this.mesh = new Mesh(geometry, material)
-
-    this.mesh.rotation.x = 35
-    this.mesh.rotation.y = 20
-
     this.mesh.position.set(props.x || 0, props.y || 0, props.z || 0)
-
     this.mesh.castShadow = true
     this.mesh.userData.isClickable = true
+
+    const vertices = new Float32Array(
+      geometry.getAttribute('position').array)
+
+    for (let i = 2, l = vertices.length; i < l; i += 3) {
+      vertices[i] += (Math.random() - 0.5) / 10
+    }
+
+    console.log(vertices.length)
+
+    geometry.addAttribute(
+      'position', new BufferAttribute(vertices, 3))
+
+    geometry.computeVertexNormals()
+    geometry.computeFaceNormals()
 
     this.player_v = 0
     this.camera_v = 0

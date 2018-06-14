@@ -5,6 +5,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production electron --js-flags=\"--use_strict\" src/electron/index",
     "dev": "cross-env NODE_ENV=development electron --js-flags=\"--use_strict\" src/electron/index",
+    "webpack": "cross-env NODE_ENV=development node --use_strict webpack",
     "build": "cross-env NODE_ENV=production node --use-strict webpack"
   },
   "sideEffects": false,
@@ -25,9 +26,17 @@
   },
   "homepage": "https://github.com/michealparks/three-boilerplate#readme",
   "devDependencies": {
-    "cross-env": "^5.1.6",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-syntax-jsx": "^6.18.0",
+    "babel-plugin-transform-react-constant-elements": "^6.23.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-minify": "^0.4.3",
+    "cross-env": "^5.2.0",
     "electron": "^2.0.2",
     "glsl-minifier": "0.0.11",
+    "preact": "^8.2.9",
+    "simplex-noise": "^2.4.0",
     "three": "^0.93.0",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "webpack": "^4.12.0"
@@ -46,8 +55,5 @@
       "__win32__",
       "__noop__"
     ]
-  },
-  "dependencies": {
-    "simplex-noise": "^2.4.0"
   }
 }

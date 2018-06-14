@@ -3,19 +3,32 @@ import {
   PCFSoftShadowMap
 } from 'three'
 
+import {
+  EVENT_RENDER_QUALITY,
+  RENDER_QUALITY_BAD,
+  RENDER_QUALITY_DECENT,
+  RENDER_QUALITY_GOOD,
+  RENDER_QUALITY_BEAUTIFUL
+} from '../constants'
+
 import cameraPivot from './camera'
 import scene from './scene'
 import {sun} from './lights'
 import {updateActors} from './actors'
 import {clamp} from '../math'
+import {on} from '../util/mediator'
 
 const updateSun = sun.update
 const [camera] = cameraPivot.children
 const updateCamera = cameraPivot.update
-const renderer = new WebGLRenderer({canvas: window.canvas, antialias: true})
+const renderer = new WebGLRenderer({
+  canvas: window.canvas,
+  antialias: true
+})
 const render = renderer.render.bind(renderer)
 
-let frameID, resizeID
+let frameID = -1
+let resizeID = -1
 
 renderer.shadowMap.enabled = true
 renderer.shadowMap.type = PCFSoftShadowMap
@@ -24,10 +37,26 @@ renderer.setSize(window.innerWidth, window.innerHeight)
 renderer.setPixelRatio(clamp(window.devicePixelRatio / 2, 1, 2))
 renderer.setClearColor(0x000000, 1.0)
 
-addEventListener('resize', (e) => {
-  if (!resizeID) {
-    resizeID = requestAnimationFrame(onResize)
+on(EVENT_RENDER_QUALITY, (quality) => {
+  let val
+
+  switch (quality) {
+    case RENDER_QUALITY_BAD:
+      val = 0.5; break
+    case RENDER_QUALITY_DECENT:
+      val = 1.0; break
+    case RENDER_QUALITY_GOOD:
+      val = 2.0; break
+    case RENDER_QUALITY_BEAUTIFUL:
+      val = 3.0; break
   }
+
+  renderer.setPixelRatio(
+    clamp(val, 0.5, window.devicePixelRatio))
+})
+
+addEventListener('resize', (e) => {
+  if (!resizeID) resizeID = requestAnimationFrame(onResize)
 })
 
 const onResize = () => {

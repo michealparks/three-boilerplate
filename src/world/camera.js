@@ -21,7 +21,9 @@ export const camera = new PerspectiveCamera(
   // Far clipping plane
   600
 )
+
 camera.matrixAutoUpdate = false
+camera.userData.isClickable = false
 
 cameraPivot.add(camera)
 
@@ -122,28 +124,32 @@ const onRightMouseMove = ({clientX}) => {
   toggleMove(0, 0, deltaX / 16, 0, true)
 }
 
-addEventListener('mousedown', ({which, clientX, clientY}) => {
+window.canvas.addEventListener('mousedown', ({currentTarget, target, which, clientX, clientY}) => {
+  if (target.id !== currentTarget.id) return
+
   if (which === 1) {
     lastScreenX = clientX
     lastScreenY = clientY
     state.isLeftMouseDown = true
-    addEventListener('mousemove', onLeftMouseMove)
+    window.canvas.addEventListener('mousemove', onLeftMouseMove)
   } else if (which === 3) {
     lastScreenX = clientX
     state.isRightMouseDown = true
-    addEventListener('mousemove', onRightMouseMove)
+    window.canvas.addEventListener('mousemove', onRightMouseMove)
   }
 })
 
-addEventListener('mouseup', ({which}) => {
+window.canvas.addEventListener('mouseup', ({currentTarget, target, which}) => {
+  if (target.id !== currentTarget.id) return
+
   if (which === 1) {
     state.isLeftMouseDown = false
     toggleMove(1, 1, 0, 0, false)
-    removeEventListener('mousemove', onLeftMouseMove)
+    window.canvas.removeEventListener('mousemove', onLeftMouseMove)
   } else if (which === 3) {
     state.isRightMouseDown = true
     toggleMove(0, 0, 1, 0, false)
-    removeEventListener('mousemove', onRightMouseMove)
+    window.canvas.removeEventListener('mousemove', onRightMouseMove)
   }
 })
 

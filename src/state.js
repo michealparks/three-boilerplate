@@ -1,4 +1,11 @@
 export default {
+  // settings
+  isFullscreen: false,
+
+  // navigation
+  isInHomeScreen: false,
+  isInMenu: false,
+
   // input
   isLeftMouseDown: false,
   isRightMouseDown: false,

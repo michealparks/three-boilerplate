@@ -1,32 +1,41 @@
 import './util/boilerplate'
-import Player from './objects/player'
-import {SIZE_MAP} from './util/constants'
+import {h, render} from 'preact'
+import Meteorite from './objects/meteorite'
+import {SIZE_MAP} from './constants'
 import {playFrames, pauseFrames} from './world/renderer'
 import {addActor} from './world/actors'
 import {findIntersectObjects} from './world/input'
+import Gui from './gui'
 
 let isPaused = false
 
-const toggle = (p = !isPaused) => {
+const toggle = (p) => {
   isPaused = p
   return isPaused ? pauseFrames() : playFrames()
 }
 
-document.addEventListener('visibilitychange', () => {
-  toggle(document.visibilityState === 'hidden')
+const onObjectClick = (object) => {
+
+}
+
+const onNoObjectClick = () => {
+
+}
+
+addEventListener('keydown', (e) => {
+  // P key
+  if (e.keyCode === 80) toggle(!isPaused)
 })
 
-addEventListener('keydown', ({keyCode}) => {
-  if (keyCode === 80) toggle()
-})
-
-for (let i = 1; i < 500; i++) {
-  addActor(new Player({
+for (let i = 1; i < 200; i++) {
+  addActor(new Meteorite({
     x: (Math.random() * SIZE_MAP) - (SIZE_MAP / 2),
     y: (Math.random() * SIZE_MAP) - (SIZE_MAP / 2),
     z: Math.random() + 2
   }))
 }
+
+render(h(Gui), document.body)
 
 playFrames()
 
@@ -40,12 +49,4 @@ addEventListener('mousedown', (e) => {
   }
 
   return onNoObjectClick()
-}, false)
-
-const onObjectClick = (object) => {
-  console.log(object)
-}
-
-const onNoObjectClick = () => {
-  console.log('no object')
-}
+})
