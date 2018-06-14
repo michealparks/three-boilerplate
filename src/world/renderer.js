@@ -11,16 +11,18 @@ import {
   RENDER_QUALITY_BEAUTIFUL
 } from '../constants'
 
-import cameraPivot from './camera'
+import {camera} from '../camera'
+import {updateCamera} from '../camera/input'
+
+// import cameraPivot, {updateCamera} from './camera'
 import scene from './scene'
 import {sun} from './lights'
-import {updateActors} from './actors'
+import {updateMeteorites} from '../objects/meteorite'
 import {clamp} from '../math'
 import {on} from '../util/mediator'
 
 const updateSun = sun.update
-const [camera] = cameraPivot.children
-const updateCamera = cameraPivot.update
+// const [camera] = cameraPivot.children
 const renderer = new WebGLRenderer({
   canvas: window.canvas,
   antialias: true
@@ -69,7 +71,7 @@ const onResize = () => {
 export const playFrames = (actors) => {
   frameID = requestAnimationFrame(playFrames)
   updateSun()
-  updateActors()
+  updateMeteorites()
   updateCamera()
   render(scene, camera)
 }

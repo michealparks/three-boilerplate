@@ -1,5 +1,5 @@
 import {Raycaster, Vector2} from 'three'
-import {camera} from './camera'
+import {camera} from '../camera'
 import scene from './scene'
 
 const raycaster = new Raycaster(undefined, undefined, 1, 100)

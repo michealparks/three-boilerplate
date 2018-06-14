@@ -1,7 +1,7 @@
 import {Scene, AxesHelper} from 'three'
 import terrain from './terrain'
 import {sun, sunHelper, sunShadowHelper} from './lights'
-import cameraPivot from './camera'
+import {cameraPivot} from '../camera'
 import sky from './sky'
 
 const scene = new Scene()

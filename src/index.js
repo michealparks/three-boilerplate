@@ -1,10 +1,10 @@
 import './util/boilerplate'
 import {h, render} from 'preact'
-import Meteorite from './objects/meteorite'
+import {addMeteorite} from './objects/meteorite'
 import {SIZE_MAP} from './constants'
 import {playFrames, pauseFrames} from './world/renderer'
-import {addActor} from './world/actors'
 import {findIntersectObjects} from './world/input'
+import {clamp} from './math'
 import Gui from './gui'
 
 let isPaused = false
@@ -27,15 +27,16 @@ addEventListener('keydown', (e) => {
   if (e.keyCode === 80) toggle(!isPaused)
 })
 
-for (let i = 1; i < 200; i++) {
-  addActor(new Meteorite({
-    x: (Math.random() * SIZE_MAP) - (SIZE_MAP / 2),
-    y: (Math.random() * SIZE_MAP) - (SIZE_MAP / 2),
-    z: Math.random() + 2
-  }))
+for (let i = 1; i < 500; i++) {
+  addMeteorite(
+    /* x */ (Math.random() * SIZE_MAP) - (SIZE_MAP / 2),
+    /* y */ (Math.random() * SIZE_MAP) - (SIZE_MAP / 2),
+    /* z */ Math.random() + 2,
+    /* radius */ clamp(Math.random() / 5, 0.05, 1)
+  )
 }
 
-render(h(Gui), document.body)
+render(<Gui />, document.body)
 
 playFrames()
 
