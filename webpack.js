@@ -73,7 +73,11 @@ const config = {
           drop_console: true,
           ecma: 6,
           keep_infinity: true,
-          toplevel: true // investigate
+          // investigate
+          toplevel: true,
+          passes: 2,
+          // Some code runs faster in the Chrome V8 engine if this option is disabled
+          reduce_funcs: false
         }
       }
     })

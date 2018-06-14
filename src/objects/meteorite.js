@@ -60,10 +60,10 @@ export const addMeteorite = (x, y, z, r) => {
 
 export const updateMeteorites = () => {
   for (let i = 0, l = meteorites.length; i < l; i++) {
-    const mesh = meteorites[i]
-    mesh.rotation.x += rx[i]
-    mesh.rotation.y += ry[i]
-    mesh.rotation.z += rz[i]
+    const {rotation} = meteorites[i]
+    rotation.x += rx[i]
+    rotation.y += ry[i]
+    rotation.z += rz[i]
   }
 }
 
