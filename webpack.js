@@ -49,7 +49,8 @@ const config = {
     path: resolve(__dirname, 'public'),
     filename: '[name].js'
   },
-  devtool: __dev__ ? 'inline-source-map' : false,
+  devtool: false,
+  // devtool: __dev__ ? 'inline-source-map' : false,
   plugins: [
     new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.NamedModulesPlugin(),

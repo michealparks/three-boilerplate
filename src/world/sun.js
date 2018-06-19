@@ -2,9 +2,8 @@ import {
   DirectionalLight,
   DirectionalLightHelper,
   CameraHelper,
-  LensFlare,
   TextureLoader,
-  AdditiveBlending
+  Color
 } from 'three'
 
 import {
@@ -13,6 +12,8 @@ import {
   SIZE_SHADOW_MAP
 } from '../constants'
 
+import {resolve} from 'path'
+import {lensFlare, addLensFlareElement} from '../post-processing/lens-flare'
 import {cameraPivot} from '../camera'
 import {DEG2RAD} from '../math'
 import state from '../state'
@@ -21,8 +22,11 @@ export const sun = new DirectionalLight(COLOR_SUNLIGHT, state.sunBrightness)
 export const sunHelper = new DirectionalLightHelper(sun, /* length */ 20)
 export const sunShadowHelper = new CameraHelper(sun.shadow.camera)
 
-const textureFlare0 = TextureLoader.load('../assets/textures/lensflare/lens_flare_alpha.png')
-export const lensFlare = new LensFlare(textureFlare0, 350, 0.0, AdditiveBlending, 0xffaacc)
+const textureFlare0 = new TextureLoader().load(
+  resolve(__root__, 'public/assets/lens_flare_alpha.png')
+)
+
+addLensFlareElement(textureFlare0, 350, 0.0, new Color(COLOR_SUNLIGHT))
 
 const shadowCamera = sun.shadow.camera
 
