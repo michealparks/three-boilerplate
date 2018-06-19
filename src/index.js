@@ -44,7 +44,7 @@ addEventListener('mousedown', (e) => {
   const intersects = findIntersectObjects(e)
 
   for (let i = 0, l = intersects.length; i < l; i++) {
-    if (intersects[i].object.userData.isClickable) {
+    if (intersects[i].object.userData.isClickable === true) {
       return onObjectClick(intersects[i].object)
     }
   }

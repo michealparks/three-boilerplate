@@ -9,7 +9,7 @@ import {
 } from 'three'
 
 import {resolve} from 'path'
-import {SIZE_MAP} from '../util/constants'
+import {SIZE_MAP} from '../constants'
 
 const SKY_SEGMENTS = 10
 const geometry = new SphereBufferGeometry(
@@ -38,7 +38,6 @@ const material = new MeshBasicMaterial({
 
 const sky = new Mesh(geometry, material)
 sky.matrixAutoUpdate = false
-sky.userData.isClickable = false
 
 sky.updateMatrix()
 

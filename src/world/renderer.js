@@ -13,20 +13,17 @@ import {
 
 import {camera} from '../camera'
 import {updateCamera} from '../camera/input'
-
-// import cameraPivot, {updateCamera} from './camera'
 import scene from './scene'
-import {sun} from './lights'
+import {updateSun} from './sun'
 import {updateMeteorites} from '../objects/meteorite'
 import {clamp} from '../math'
 import {on} from '../util/mediator'
 
-const updateSun = sun.update
-// const [camera] = cameraPivot.children
 const renderer = new WebGLRenderer({
   canvas: window.canvas,
   antialias: true
 })
+
 const render = renderer.render.bind(renderer)
 
 let frameID = -1
@@ -68,7 +65,7 @@ const onResize = () => {
   resizeID = null
 }
 
-export const playFrames = (actors) => {
+export const playFrames = (delta) => {
   frameID = requestAnimationFrame(playFrames)
   updateSun()
   updateMeteorites()

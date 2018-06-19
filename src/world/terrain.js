@@ -9,7 +9,7 @@ import {
   NUM_MAP_TILES,
   SIZE_MAP,
   COLOR_MOON
-} from '../util/constants'
+} from '../constants'
 
 import SimplexNoise from 'simplex-noise'
 
