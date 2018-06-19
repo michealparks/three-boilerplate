@@ -52,9 +52,8 @@ module.exports = function (source) {
   parse(this, source, this.context, (err, bld) => {
     if (err) return cb(err)
 
-    const str = JSON.stringify(bld)
-      .replace(/\n\n/g, '\n')
-      .replace(/\n\n\n/g, '\n')
+    const str = JSON.stringify(bld
+      .replace(/\n\n|\n\n\n|\n\t|\n\t\t/g, '\n'))
 
     cb(null, 'export default ' + str)
   })

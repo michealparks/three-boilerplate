@@ -22,10 +22,10 @@ sun.userData.isClickable = false
 sun.castShadow = true
 sun.shadow.mapSize.width = SIZE_SHADOW_MAP
 sun.shadow.mapSize.height = SIZE_SHADOW_MAP
-sun.shadow.camera.left = -SIZE_MAP / 2
-sun.shadow.camera.right = SIZE_MAP / 2
-sun.shadow.camera.top = SIZE_MAP / 2
-sun.shadow.camera.bottom = -SIZE_MAP / 2
+sun.shadow.camera.left = -SIZE_MAP / 4
+sun.shadow.camera.right = SIZE_MAP / 4
+sun.shadow.camera.top = SIZE_MAP / 4
+sun.shadow.camera.bottom = -SIZE_MAP / 4
 
 sun.position.set(0, 0, (SIZE_MAP / 3))
 sun.rotation.set(-90 * DEG2RAD, 0, 0)
