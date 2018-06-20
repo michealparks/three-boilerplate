@@ -6,12 +6,18 @@ import {
   Color
 } from 'three'
 
+import {
+  EARTH_RADIUS,
+  EARTH_SEGMENTS
+} from '../constants'
+
 import loadTexture from '../util/load-texture'
 
 const geometry = new SphereGeometry(
-  8.2,
-  90,
-  90
+  // Radius
+  EARTH_RADIUS + 0.2,
+  EARTH_SEGMENTS * 4,
+  EARTH_SEGMENTS * 3
 )
 
 const uv = geometry.faceVertexUvs[0]
@@ -25,6 +31,7 @@ geometry.uvsNeedUpdate = true
 const material = new MeshPhongMaterial({
   map: loadTexture('public/assets/earth_clouds.png'),
   flatShading: true,
+  shininess: 20,
   specular: new Color('white'),
   side: DoubleSide,
   opacity: 1,

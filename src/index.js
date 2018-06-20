@@ -27,7 +27,7 @@ addEventListener('keydown', (e) => {
   if (e.keyCode === 80) toggle(!isPaused)
 })
 
-for (let i = 1; i < 500; i++) {
+for (let i = 1; i < 100; i++) {
   addMeteorite(
     /* x */ (Math.random() * SIZE_MAP) - (SIZE_MAP / 2),
     /* y */ (Math.random() * SIZE_MAP) - (SIZE_MAP / 2),

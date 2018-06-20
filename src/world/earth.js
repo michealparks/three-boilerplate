@@ -1,21 +1,24 @@
 import {
-  SphereBufferGeometry,
   SphereGeometry,
   MeshPhongMaterial,
   Mesh,
-  BufferAttribute,
   Color
 } from 'three'
+
+import {
+  EARTH_SEGMENTS,
+  EARTH_RADIUS
+} from '../constants'
 
 import loadTexture from '../util/load-texture'
 
 const geometry = new SphereGeometry(
   // Radius
-  8,
+  EARTH_RADIUS,
   // Width Segments
-  50,
+  EARTH_SEGMENTS * 2,
   // Height Segments
-  25)
+  EARTH_SEGMENTS)
 
 const uv = geometry.faceVertexUvs[0]
 for (let i = 0, l = uv.length; i < l; i += 1) {
@@ -26,7 +29,7 @@ for (let i = 0, l = uv.length; i < l; i += 1) {
 geometry.uvsNeedUpdate = true
 
 const material = new MeshPhongMaterial({
-  map: loadTexture('public/assets/earth.jpg'),
+  map: loadTexture('public/assets/earth_2.jpg'),
   shininess: 5,
   flatShading: true,
   bumpMap: loadTexture('public/assets/earth_bump.jpg'),

@@ -110,13 +110,13 @@ window.canvas.addEventListener('mousedown', (e) => {
     lastScreenX = clientX
     lastScreenY = clientY
     state.isLeftMouseDown = true
-    window.canvas.addEventListener('mousemove', onLeftMouseMove)
+    window.canvas.addEventListener('mousemove', onLeftMouseMove, {passive: true})
   } else if (which === 3) {
     lastScreenX = clientX
     state.isRightMouseDown = true
-    window.canvas.addEventListener('mousemove', onRightMouseMove)
+    window.canvas.addEventListener('mousemove', onRightMouseMove, {passive: true})
   }
-})
+}, {passive: true})
 
 window.canvas.addEventListener('mouseup', (e) => {
   if (e.target.id !== e.currentTarget.id) return
@@ -132,7 +132,7 @@ window.canvas.addEventListener('mouseup', (e) => {
     toggleMove(0, 0, 1, 0, false)
     window.canvas.removeEventListener('mousemove', onRightMouseMove)
   }
-})
+}, {passive: true})
 
 if ('onwheel' in window) {
   addEventListener('wheel', (e) => {
@@ -145,10 +145,10 @@ if ('onwheel' in window) {
 
     wheelEndTimeoutId = setTimeout(
       toggleInput, 10, mouseWheelInputCode, false)
-  })
+  }, {passive: true})
 }
 
-addEventListener('keydown', (e) => toggleInput(e.keyCode, true))
-addEventListener('keyup', (e) => toggleInput(e.keyCode, false))
+addEventListener('keydown', (e) => toggleInput(e.keyCode, true), {passive: true})
+addEventListener('keyup', (e) => toggleInput(e.keyCode, false), {passive: true})
 
 addEventListener('gamepadconnected', (e) => {})

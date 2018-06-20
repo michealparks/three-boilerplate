@@ -1,4 +1,8 @@
-import {SIZE_MAP} from '../constants'
+import {
+  SIZE_MAP
+} from '../constants'
+
+import state from '../state'
 import {DEG2RAD} from '../math'
 import sky from './sky'
 import sun from './sun'
@@ -6,8 +10,6 @@ import earth from './earth'
 import earthClouds from './earth-clouds'
 import {lensFlare} from '../post-processing/lens-flare'
 import {cameraPivot} from '../camera'
-
-const MOON_ROTATION_SPEED = 5e-4
 
 const shadowCamera = sun.shadow.camera
 
@@ -22,7 +24,7 @@ lensFlare.position.z = (sun.position.z - 50)
 
 const updateWorld = () => {
   // sky
-  theta += MOON_ROTATION_SPEED
+  theta += state.rotationSpeed
 
   if (theta >= Math.PI * 2) theta = 0
 

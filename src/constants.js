@@ -1,11 +1,14 @@
-// events
+// events enum
 export const EVENT_RENDER_QUALITY = 0
 
-// setting screens
+// storage enum
+export const STORED_RENDER_QUALITY = 0
+
+// setting screens enum
 export const SCREEN_MENU = 0
 export const SCREEN_SETTINGS = 1
 
-// rendering pixel ratio level
+// rendering pixel ratio level enum
 export const RENDER_QUALITY_BAD = 0
 export const RENDER_QUALITY_DECENT = 1
 export const RENDER_QUALITY_GOOD = 2
@@ -16,7 +19,9 @@ export const COLOR_MOON = 0xA2A8AE
 export const COLOR_ROCK = 0x958D84
 export const COLOR_SUNLIGHT = 0xFAD6A5
 
-// Brightness
+// Earth
+export const EARTH_RADIUS = 8
+export const EARTH_SEGMENTS = 20
 
 // Terrain
 // has a large impact on performance,

@@ -40,8 +40,10 @@ const colors = [
   new Color(COLOR_SUNLIGHT)
 ]
 
-const sizes = [350, 60, 70, 120, 70]
-const distances = [0.0, 0.01, 0.05, 0.1, 0.2]
+const sizes = [350, 60, 70, 150, 100]
+// const distances = [0.0, 0.01, 0.05, 0.1, 0.2]
+
+const distances = [0.0, 0.02, 0.1, 0.15, 0.2]
 
 const interleavedBuffer = new InterleavedBuffer(new Float32Array([
   -1, -1, 0, 0, 0,
