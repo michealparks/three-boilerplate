@@ -1,15 +1,14 @@
 import {
   WebGLRenderer,
   SphereBufferGeometry,
-  TextureLoader,
   MeshBasicMaterial,
   Mesh,
   RepeatWrapping,
   BackSide
 } from 'three'
 
-import {resolve} from 'path'
 import {SIZE_MAP} from '../constants'
+import loadTexture from '../util/load-texture'
 
 const SKY_SEGMENTS = 10
 const geometry = new SphereBufferGeometry(
@@ -21,10 +20,7 @@ const geometry = new SphereBufferGeometry(
   SKY_SEGMENTS
 )
 
-const texture = new TextureLoader().load(
-  resolve(__root__, 'public/assets/space.jpg')
-)
-
+const texture = loadTexture('public/assets/space.jpg')
 texture.wrapS = RepeatWrapping
 texture.wrapT = RepeatWrapping
 texture.repeat.x = 18
@@ -37,8 +33,8 @@ const material = new MeshBasicMaterial({
 })
 
 const sky = new Mesh(geometry, material)
-sky.matrixAutoUpdate = false
+// sky.matrixAutoUpdate = false
 
-sky.updateMatrix()
+// sky.updateMatrix()
 
 export default sky

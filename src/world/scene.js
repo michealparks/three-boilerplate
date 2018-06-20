@@ -12,12 +12,12 @@ if (__dev__) {
   // scene.add(new AxesHelper(100))
 }
 
-scene.add(cameraPivot)
-scene.add(terrain)
-scene.add(sun)
 scene.add(sky)
+scene.add(sun)
 // scene.add(sunHelper)
 // scene.add(sunShadowHelper)
 scene.add(lensFlare)
+scene.add(terrain)
+scene.add(cameraPivot)
 
 export default scene

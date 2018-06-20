@@ -37,15 +37,11 @@ export const addMeteorite = (x, y, z, r) => {
   )
 
   const mesh = new Mesh(geometry, material)
-  mesh.position.set(x || 0, y || 0, z || 0)
+  mesh.position.set(x, y, z)
   mesh.castShadow = true
 
   const vertices = geometry.getAttribute('position').array
-
-  for (let i = 2, l = vertices.length; i < l; i += 3) {
-    vertices[i] += (Math.random() - 0.5) / 10
-  }
-
+  // TODO distort vertices
   geometry.addAttribute('position', new BufferAttribute(vertices, 3))
 
   rx[n] = Math.random() / 20

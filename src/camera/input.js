@@ -77,6 +77,7 @@ const onRightMouseMove = ({clientX}) => {
 }
 
 export const updateCamera = () => {
+  // TODO exit if not moving
   camera.applyMatrix(rotateMatrix.makeRotationZ(camDr))
   camDr += catchUp(dr, camDr)
 

@@ -14,6 +14,7 @@ import {
 import {camera} from '../camera'
 import {updateCamera} from '../camera/input'
 import scene from './scene'
+import updateWorld from '.'
 import {updateSun} from './sun'
 import {updateMeteorites} from '../objects/meteorite'
 import {clamp} from '../math'
@@ -67,7 +68,7 @@ const onResize = () => {
 
 export const playFrames = (delta) => {
   frameID = requestAnimationFrame(playFrames)
-  updateSun()
+  updateWorld()
   updateMeteorites()
   updateCamera()
   render(scene, camera)
