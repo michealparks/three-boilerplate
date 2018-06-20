@@ -11,5 +11,5 @@ export default {
   isRightMouseDown: false,
 
   // world
-  sunBrightness: 0.2
+  sunBrightness: 0.5
 }

@@ -3,6 +3,8 @@ import terrain from './terrain'
 import {lensFlare} from '../post-processing/lens-flare'
 import {sun, sunHelper, sunShadowHelper} from './sun'
 import {cameraPivot} from '../camera'
+import earth from './earth'
+import earthClouds from './earth-clouds'
 import sky from './sky'
 
 const scene = new Scene()
@@ -14,6 +16,8 @@ if (__dev__) {
 
 scene.add(sky)
 scene.add(sun)
+scene.add(earth)
+scene.add(earthClouds)
 // scene.add(sunHelper)
 // scene.add(sunShadowHelper)
 scene.add(lensFlare)

@@ -10,14 +10,13 @@ import {
 import {SIZE_MAP} from '../constants'
 import loadTexture from '../util/load-texture'
 
-const SKY_SEGMENTS = 10
 const geometry = new SphereBufferGeometry(
   // Radius
   SIZE_MAP * 2.2,
   // Width segments
-  SKY_SEGMENTS,
+  10,
   // Height segments
-  SKY_SEGMENTS
+  10
 )
 
 const texture = loadTexture('public/assets/space.jpg')
