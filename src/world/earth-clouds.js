@@ -26,6 +26,12 @@ for (let i = 0, l = uv.length; i < l; i += 1) {
   uv[i][2] = uv[i][1]
 }
 
+for (let i = 0, v = geometry.vertices, l = v.length; i < l; i++) {
+  v[i].x += (Math.random() - 0.5) / 3
+  v[i].y += (Math.random() - 0.5) / 3
+  v[i].z += (Math.random() - 0.5) / 3
+}
+
 geometry.uvsNeedUpdate = true
 
 const material = new MeshPhongMaterial({

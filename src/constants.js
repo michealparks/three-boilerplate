@@ -1,3 +1,9 @@
+// game speed enum
+export const GAME_SPEED_PAUSED = 0
+export const GAME_SPEED_SLOW = 1
+export const GAME_SPEED_MEDIUM = 2
+export const GAME_SPEED_FAST = 3
+
 // events enum
 export const EVENT_RENDER_QUALITY = 0
 

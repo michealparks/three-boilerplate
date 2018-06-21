@@ -8,25 +8,32 @@ import sky from './sky'
 import sun from './sun'
 import earth from './earth'
 import earthClouds from './earth-clouds'
+import earthSpotLight from './earth-spotlight'
 import {lensFlare} from '../post-processing/lens-flare'
 import {cameraPivot} from '../camera'
 
 const shadowCamera = sun.shadow.camera
 
-let theta = 0
-let sinVal = 0
+let theta = 0.0
+let sinVal = 0.0
 
 earth.position.x = earthClouds.position.x = -(SIZE_MAP / 2) - 10
 earth.position.z = earthClouds.position.z = -25
 earth.rotation.x = earthClouds.rotation.x = (80 * DEG2RAD)
 
-lensFlare.position.z = (sun.position.z - 50)
+earthSpotLight.target = earth
+
+const sunZ = 30
+sun.position.z = sunZ
+sun.rotation.x = -90 * DEG2RAD
+sun.rotation.z = -90 * DEG2RAD
+earthSpotLight.position.z = sunZ + 60
+lensFlare.position.z = (sunZ - 50)
 
 const updateWorld = () => {
-  // sky
   theta += state.rotationSpeed
 
-  if (theta >= Math.PI * 2) theta = 0
+  if (theta >= Math.PI * 2) theta = 0.0
 
   sky.rotation.z = theta
 
@@ -50,10 +57,8 @@ const updateWorld = () => {
   const x = SIZE_MAP / 2 * Math.cos(theta)
   const y = SIZE_MAP / 2 * Math.sin(theta)
 
-  sun.position.x = x
-  sun.position.y = y
-  lensFlare.position.x = x
-  lensFlare.position.y = y
+  sun.position.x = earthSpotLight.position.x = lensFlare.position.x = x
+  sun.position.y = earthSpotLight.position.y = lensFlare.position.y = y
 }
 
 export default updateWorld
