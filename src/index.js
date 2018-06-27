@@ -22,23 +22,27 @@ const onNoObjectClick = () => {
 
 }
 
-addEventListener('keydown', (e) => {
-  // P key
-  if (e.keyCode === 80) toggle(!isPaused)
-})
-
 for (let i = 1; i < 100; i++) {
   addMeteorite(
-    /* x */ (Math.random() * SIZE_MAP) - (SIZE_MAP / 2),
-    /* y */ (Math.random() * SIZE_MAP) - (SIZE_MAP / 2),
-    /* z */ Math.random() + 2,
-    /* radius */ clamp(Math.random() / 5, 0.05, 1)
+    // x
+    (Math.random() * SIZE_MAP) - (SIZE_MAP / 2),
+    // y
+    (Math.random() * SIZE_MAP) - (SIZE_MAP / 2),
+    // z
+    (Math.random() + 2),
+    // radius
+    clamp(Math.random() / 5, 0.05, 1)
   )
 }
 
 render(<Gui />, document.body)
 
 playFrames()
+
+addEventListener('keydown', (e) => {
+  // P key
+  if (e.keyCode === 80) toggle(!isPaused)
+}, {passive: true})
 
 addEventListener('mousedown', (e) => {
   const intersects = findIntersectObjects(e)
@@ -50,4 +54,4 @@ addEventListener('mousedown', (e) => {
   }
 
   return onNoObjectClick()
-})
+}, {passive: true})

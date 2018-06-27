@@ -12,5 +12,5 @@ export default {
 
   // world
   sunBrightness: 0.4,
-  rotationSpeed: 1e-4
+  rotationSpeed: 1e-3
 }

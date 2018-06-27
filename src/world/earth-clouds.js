@@ -2,8 +2,7 @@ import {
   SphereGeometry,
   MeshPhongMaterial,
   Mesh,
-  DoubleSide,
-  Color
+  DoubleSide
 } from 'three'
 
 import {
@@ -21,6 +20,7 @@ const geometry = new SphereGeometry(
 )
 
 const uv = geometry.faceVertexUvs[0]
+
 for (let i = 0, l = uv.length; i < l; i += 1) {
   uv[i][0] = uv[i][1]
   uv[i][2] = uv[i][1]
@@ -38,7 +38,7 @@ const material = new MeshPhongMaterial({
   map: loadTexture('public/assets/earth_clouds.png'),
   flatShading: true,
   shininess: 20,
-  specular: new Color('white'),
+  specular: 0xffffff,
   side: DoubleSide,
   opacity: 1,
   transparent: true,

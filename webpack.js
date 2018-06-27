@@ -27,7 +27,7 @@ const config = {
                 ['transform-react-jsx', {pragma: 'h', useBuiltIns: true}],
                 ['transform-react-constant-elements', {allowMutablePropsOnTags: []}],
                 'syntax-jsx'
-              ],
+              ]
               // presets: __dev__ ? [] : [['minify', {
               //   booleans: false,
               //   infinity: false,

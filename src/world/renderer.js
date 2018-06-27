@@ -19,6 +19,7 @@ import updateWorld from '.'
 import {updateMeteorites} from '../objects/meteorite'
 import {clamp} from '../math'
 import {on} from '../util/mediator'
+import storage from '../util/storage'
 
 const renderer = new WebGLRenderer({
   canvas: window.canvas,
@@ -33,11 +34,11 @@ let resizeID = -1
 renderer.shadowMap.enabled = true
 renderer.shadowMap.type = PCFSoftShadowMap
 
-const quality = localStorage.getItem(STORED_RENDER_QUALITY)
+storage.get(STORED_RENDER_QUALITY, (quality) => {
+  renderer.setPixelRatio(quality || clamp(window.devicePixelRatio / 2, 1, 2))
+})
 
 renderer.setSize(window.innerWidth, window.innerHeight)
-renderer.setPixelRatio(
-  quality || clamp(window.devicePixelRatio / 2, 1, 2))
 renderer.setClearColor(0x000000, 1.0)
 
 on(EVENT_RENDER_QUALITY, (quality) => {
@@ -56,7 +57,8 @@ on(EVENT_RENDER_QUALITY, (quality) => {
 
   renderer.setPixelRatio(
     clamp(val, 0.5, window.devicePixelRatio))
-  localStorage.setItem(STORED_RENDER_QUALITY, val)
+
+  storage.set(STORED_RENDER_QUALITY, val)
 })
 
 addEventListener('resize', (e) => {
