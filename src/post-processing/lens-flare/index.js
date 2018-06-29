@@ -106,7 +106,7 @@ export const lensFlare = new Mesh(geometry, material)
 
 lensFlare.type = lensFlare.name = 'Lensflare'
 lensFlare.frustumCulled = false
-lensFlare.renderOrder = Infinity
+lensFlare.renderOrder = -Infinity
 lensFlare.isLensflare = true
 
 const positionScreen = new Vector3()

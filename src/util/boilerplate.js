@@ -3,7 +3,7 @@ const evalError = () => {
 }
 
 // eslint-disable-next-line
-global.eval = evalError
+if (typeof global !== 'undefined') global.eval = evalError
 
 // eslint-disable-next-line
 if (typeof window !== 'undefined') window.eval = evalError

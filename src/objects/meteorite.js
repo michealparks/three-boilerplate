@@ -44,9 +44,9 @@ export const addMeteorite = (x, y, z, r) => {
   // TODO distort vertices
   geometry.addAttribute('position', new BufferAttribute(vertices, 3))
 
-  rx[n] = Math.random() / 20
-  ry[n] = Math.random() / 20
-  rz[n] = Math.random() / 20
+  rx[n] = Math.random() / 20.0
+  ry[n] = Math.random() / 20.0
+  rz[n] = Math.random() / 20.0
   meteorites.push(mesh)
   scene.add(mesh)
 

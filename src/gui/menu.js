@@ -19,15 +19,12 @@ export default class Menu extends Component {
 
   onExit () {
     // Todo save
-    require('electron').remote.app.quit()
+    window.App_Quit()
   }
 
   onFullscreen () {
-    require('electron').remote.BrowserWindow
-      .getFocusedWindow()
-      .setFullScreen(!state.isFullscreen)
-
     state.isFullscreen = !state.isFullscreen
+    window.App_ToggleFullScreen(state.isFullscreen)
   }
 
   render (props, {screen}) {

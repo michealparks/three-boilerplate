@@ -1,6 +1,7 @@
 import {h, Component} from 'preact'
 import state from '../state'
 import Menu from './menu'
+import Controls from './controls'
 
 export default class Gui extends Component {
   constructor (props) {
@@ -18,8 +19,11 @@ export default class Gui extends Component {
   }
 
   render (props, {isInMenu}) {
-    return h('span', {class: 'gui'},
-      isInMenu ? <Menu /> : null
+    return (
+      <span class='gui'>
+        {isInMenu ? <Menu /> : null}
+        <Controls />
+      </span>
     )
   }
 }

@@ -28,14 +28,6 @@ const config = {
                 ['transform-react-constant-elements', {allowMutablePropsOnTags: []}],
                 'syntax-jsx'
               ]
-              // presets: __dev__ ? [] : [['minify', {
-              //   booleans: false,
-              //   infinity: false,
-              //   removeConsole: true,
-              //   removeDebugger: true,
-              //   simplifyComparisons: false,
-              //   undefinedToVoid: false
-              // }]]
             }
           }
         ]
@@ -74,7 +66,7 @@ const config = {
           drop_console: true,
           ecma: 6,
           keep_infinity: true,
-          // investigate
+          // removes unused top level functions
           toplevel: true,
           passes: 2,
           // Some code runs faster in the Chrome V8 engine if this option is disabled

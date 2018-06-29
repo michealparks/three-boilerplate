@@ -11,7 +11,7 @@ import {
   COLOR_MOON
 } from '../constants'
 
-import SimplexNoise from 'simplex-noise'
+import SimplexNoise from '../math/simplex-noise'
 
 const simplex = new SimplexNoise()
 const noise2D = simplex.noise2D.bind(simplex)
@@ -92,6 +92,7 @@ const plane = new Mesh(geometry, material)
 
 plane.translateZ(-SIZE_MAP / 2)
 plane.updateMatrix()
+plane.name = 'terrain'
 
 // Make static
 plane.matrixAutoUpdate = false

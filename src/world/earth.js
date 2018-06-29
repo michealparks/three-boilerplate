@@ -18,7 +18,8 @@ const geometry = new SphereGeometry(
   // Width Segments
   EARTH_SEGMENTS * 2,
   // Height Segments
-  EARTH_SEGMENTS)
+  EARTH_SEGMENTS
+)
 
 const uv = geometry.faceVertexUvs[0]
 for (let i = 0, l = uv.length; i < l; i += 1) {

@@ -1,5 +1,4 @@
 import {
-  WebGLRenderer,
   SphereBufferGeometry,
   MeshBasicMaterial,
   Mesh,
@@ -8,6 +7,7 @@ import {
 } from 'three'
 
 import {SIZE_MAP} from '../constants'
+import renderer from '../engine/renderer'
 import loadTexture from '../util/load-texture'
 
 const geometry = new SphereBufferGeometry(
@@ -24,7 +24,7 @@ texture.wrapS = RepeatWrapping
 texture.wrapT = RepeatWrapping
 texture.repeat.x = 18
 texture.repeat.y = 18
-texture.anisotropy = new WebGLRenderer().capabilities.getMaxAnisotropy()
+texture.anisotropy = renderer.capabilities.getMaxAnisotropy()
 
 const material = new MeshBasicMaterial({
   map: texture,
@@ -32,8 +32,5 @@ const material = new MeshBasicMaterial({
 })
 
 const sky = new Mesh(geometry, material)
-// sky.matrixAutoUpdate = false
-
-// sky.updateMatrix()
 
 export default sky
