@@ -33,3 +33,5 @@ camera.position.set(0, -radius, 0)
 
 cameraPivot.updateMatrix()
 camera.updateMatrix()
+
+export default camera

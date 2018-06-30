@@ -8,7 +8,7 @@ export default {
   },
 
   vertexShader: `
-    precision highp float;
+    precision mediump float;
     uniform vec3 screenPosition;
     uniform vec2 scale;
     uniform sampler2D occlusionMap;
@@ -38,7 +38,7 @@ export default {
     }
   `,
   fragmentShader: `
-    precision highp float;
+    precision mediump float;
     uniform sampler2D map;
     uniform vec3 color;
     varying vec2 vUV;

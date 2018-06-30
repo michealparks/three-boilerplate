@@ -8,7 +8,7 @@ export default new RawShaderMaterial({
     screenPosition: {value: null}
   },
   vertexShader: `
-    precision highp float;
+    precision mediump float;
     uniform vec3 screenPosition;
     uniform vec2 scale;
     attribute vec3 position;
@@ -17,16 +17,20 @@ export default new RawShaderMaterial({
 
     void main() {
       vUV = uv;
-      gl_Position = vec4(position.xy * scale + screenPosition.xy, screenPosition.z, 1.0);
+      gl_Position = vec4(
+        position.xy * scale + screenPosition.xy,
+        screenPosition.z,
+        1.0
+      );
     }
   `,
   fragmentShader: `
-    precision highp float;
+    precision mediump float;
     uniform sampler2D map;
     varying vec2 vUV;
 
     void main() {
-      gl_FragColor = texture2D( map, vUV );
+      gl_FragColor = texture2D(map, vUV);
     }
   `,
   depthTest: false,

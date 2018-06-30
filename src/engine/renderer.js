@@ -5,7 +5,6 @@ import {
 
 import {
   STORED_RENDER_QUALITY,
-  EVENT_RENDER_QUALITY,
   RENDER_QUALITY_BAD,
   RENDER_QUALITY_DECENT,
   RENDER_QUALITY_GOOD,
@@ -14,7 +13,6 @@ import {
 
 import {camera} from '../camera'
 import {clamp} from '../math'
-import {on} from '../util/mediator'
 import storage from '../util/storage'
 
 let resizeID = -1
@@ -35,7 +33,7 @@ renderer.shadowMap.type = PCFSoftShadowMap
 renderer.setSize(window.innerWidth, window.innerHeight)
 renderer.setClearColor(0x000000, 1.0)
 
-on(EVENT_RENDER_QUALITY, (quality) => {
+export const updateQuality = (quality) => {
   let val
 
   switch (quality) {
@@ -49,11 +47,9 @@ on(EVENT_RENDER_QUALITY, (quality) => {
       val = 2.0; break
   }
 
-  renderer.setPixelRatio(
-    clamp(val, 0.5, window.devicePixelRatio))
-
+  renderer.setPixelRatio(clamp(val, 0.5, window.devicePixelRatio))
   storage.set(STORED_RENDER_QUALITY, val)
-})
+}
 
 window.addEventListener('resize', (e) => {
   if (resizeID === -1) resizeID = requestAnimationFrame(onResize)

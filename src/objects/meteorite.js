@@ -14,7 +14,7 @@ import scene from '../world/scene'
 const MAX_METEORITES = 500
 const METEORITE_SEGMENTS = 4
 
-const meteorites = []
+const meteorites = new Map()
 const rx = new Float32Array(MAX_METEORITES)
 const ry = new Float32Array(MAX_METEORITES)
 const rz = new Float32Array(MAX_METEORITES)
@@ -47,10 +47,17 @@ export const addMeteorite = (x, y, z, r) => {
   rx[n] = Math.random() / 20.0
   ry[n] = Math.random() / 20.0
   rz[n] = Math.random() / 20.0
-  meteorites.push(mesh)
+  meteorites.set(mesh.id, mesh)
   scene.add(mesh)
 
   n += 1
+}
+
+export const deleteMeteorite = (object) => {
+  meteorites.delete(object.id)
+  scene.remove(object)
+  object.geometry.dispose()
+  if (object.dispose) object.dispose()
 }
 
 export const updateMeteorites = () => {

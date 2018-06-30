@@ -10,7 +10,6 @@ import {
   Vector2,
   AdditiveBlending,
   Box2,
-  Vector4,
   BufferGeometry,
   InterleavedBuffer,
   InterleavedBufferAttribute,
@@ -18,32 +17,15 @@ import {
 } from 'three'
 
 import {COLOR_SUNLIGHT} from '../../constants'
-import loadTexture from '../../util/load-texture'
+import {lensFlareTextures} from '../../textures'
 import shader from './shader'
 import tempMap from './temp-map'
 import material1a from './material1a'
 import material1b from './material1b'
 
-const textures = [
-  loadTexture('public/assets/lensflare0.png'),
-  loadTexture('public/assets/lensflare0.png'),
-  loadTexture('public/assets/lensflare1.png'),
-  loadTexture('public/assets/lensFlare2.png'),
-  loadTexture('public/assets/lensflare3.png')
-]
-
-const colors = [
-  new Color(COLOR_SUNLIGHT),
-  new Color(COLOR_SUNLIGHT),
-  new Color(COLOR_SUNLIGHT),
-  new Color(COLOR_SUNLIGHT),
-  new Color(COLOR_SUNLIGHT)
-]
-
+const color = new Color(COLOR_SUNLIGHT)
 const sizes = [350, 60, 70, 150, 100]
-// const distances = [0.0, 0.01, 0.05, 0.1, 0.2]
-
-const distances = [0.0, 0.02, 0.1, 0.15, 0.2]
+const distances = [0.0, 0.02, 0.1, 0.11, 0.2]
 
 const interleavedBuffer = new InterleavedBuffer(new Float32Array([
   -1, -1, 0, 0, 0,
@@ -87,7 +69,7 @@ const mesh2 = new Mesh(geometry, material2)
 const scale = new Vector2()
 const screenPositionPixels = new Vector2()
 const validArea = new Box2()
-const viewport = new Vector4()
+const uniforms = material2.uniforms
 
 export const dispose = () => {
   material1a.dispose()
@@ -97,8 +79,8 @@ export const dispose = () => {
   tempMap.dispose()
   occlusionMap.dispose()
 
-  for (let i = 0, l = textures.length; i < l; i++) {
-    textures[i].dispose()
+  for (let i = 0, l = lensFlareTextures.length; i < l; i++) {
+    lensFlareTextures[i].dispose()
   }
 }
 
@@ -113,21 +95,25 @@ const positionScreen = new Vector3()
 const m1aUniforms = material1a.uniforms
 const m1bUniforms = material1b.uniforms
 
+export const updateColors = (c) => {
+  for (let i = 0, l = lensFlareTextures.length; i < l; i++) {
+    uniforms.color.value.copy(c)
+  }
+}
+
+updateColors(color)
+
 lensFlare.onBeforeRender = (renderer, scene, camera) => {
-  viewport.copy(renderer.getCurrentViewport())
+  const {x, y, z, w} = renderer.getCurrentViewport()
+  const invAspect = w / z
+  const halfViewportWidth = z / 2.0
+  const halfViewportHeight = w / 2.0
 
-  const invAspect = viewport.w / viewport.z
-  const halfViewportWidth = viewport.z / 2.0
-  const halfViewportHeight = viewport.w / 2.0
-
-  const size = 16 / viewport.w
+  const size = 16 / w
   scale.set(size * invAspect, size)
 
-  validArea.min.set(viewport.x - 50, viewport.y - 50)
-  validArea.max.set(
-    (viewport.x + (viewport.z - 16)) + 50,
-    (viewport.y + (viewport.w - 16)) + 50
-  )
+  validArea.min.set(x - 50, y - 50)
+  validArea.max.set((x + (z - 16)) + 50, (y + (w - 16)) + 50)
 
   // calculate position in screen space
   positionScreen.setFromMatrixPosition(lensFlare.matrixWorld)
@@ -135,8 +121,8 @@ lensFlare.onBeforeRender = (renderer, scene, camera) => {
   positionScreen.applyMatrix4(camera.projectionMatrix)
 
   // horizontal and vertical coordinate of the lower left corner of the pixels to copy
-  screenPositionPixels.x = viewport.x + (positionScreen.x * halfViewportWidth) + halfViewportWidth - 8
-  screenPositionPixels.y = viewport.y + (positionScreen.y * halfViewportHeight) + halfViewportHeight - 8
+  screenPositionPixels.x = x + (positionScreen.x * halfViewportWidth) + halfViewportWidth - 8
+  screenPositionPixels.y = y + (positionScreen.y * halfViewportHeight) + halfViewportHeight - 8
 
   // screen cull
   if (!validArea.containsPoint(screenPositionPixels)) return
@@ -165,15 +151,13 @@ lensFlare.onBeforeRender = (renderer, scene, camera) => {
   // render elements
   const vecX = -positionScreen.x * 2
   const vecY = -positionScreen.y * 2
-  const uniforms = material2.uniforms
 
-  for (let i = 0, l = textures.length; i < l; i++) {
-    uniforms.color.value.copy(colors[i])
-    uniforms.map.value = textures[i]
+  for (let i = 0, l = lensFlareTextures.length; i < l; i++) {
+    uniforms.map.value = lensFlareTextures[i]
     uniforms.screenPosition.value.x = positionScreen.x + vecX * distances[i]
     uniforms.screenPosition.value.y = positionScreen.y + vecY * distances[i]
 
-    const size = sizes[i] / viewport.w
+    const size = sizes[i] / w
 
     uniforms.scale.value.set(size * invAspect, size)
 

@@ -1,11 +1,10 @@
 import {Component, h} from 'preact'
-import {emit} from '../util/mediator'
+import {updateQuality} from '../engine/renderer'
 import state from '../state'
 
 import {
   SCREEN_MENU,
   SCREEN_SETTINGS,
-  EVENT_RENDER_QUALITY,
   RENDER_QUALITY_DECENT,
   RENDER_QUALITY_GOOD,
   RENDER_QUALITY_BEAUTIFUL
@@ -48,16 +47,13 @@ export default class Menu extends Component {
               Fullscreen
             </button>
             <p>Render quality</p>
-            <button onClick={() =>
-              emit(EVENT_RENDER_QUALITY, RENDER_QUALITY_DECENT)}>
+            <button onClick={() => updateQuality(RENDER_QUALITY_DECENT)}>
               Decent
             </button>
-            <button onClick={() =>
-              emit(EVENT_RENDER_QUALITY, RENDER_QUALITY_GOOD)}>
+            <button onClick={() => updateQuality(RENDER_QUALITY_GOOD)}>
               Good
             </button>
-            <button onClick={() =>
-              emit(EVENT_RENDER_QUALITY, RENDER_QUALITY_BEAUTIFUL)}>
+            <button onClick={() => updateQuality(RENDER_QUALITY_BEAUTIFUL)}>
               Beautiful
             </button>
           </div>}

@@ -2,13 +2,11 @@ import {
   SphereBufferGeometry,
   MeshBasicMaterial,
   Mesh,
-  RepeatWrapping,
   BackSide
 } from 'three'
 
 import {SIZE_MAP} from '../constants'
-import renderer from '../engine/renderer'
-import loadTexture from '../util/load-texture'
+import {skyTexture} from '../textures'
 
 const geometry = new SphereBufferGeometry(
   // Radius
@@ -19,15 +17,8 @@ const geometry = new SphereBufferGeometry(
   10
 )
 
-const texture = loadTexture('public/assets/space.jpg')
-texture.wrapS = RepeatWrapping
-texture.wrapT = RepeatWrapping
-texture.repeat.x = 18
-texture.repeat.y = 18
-texture.anisotropy = renderer.capabilities.getMaxAnisotropy()
-
 const material = new MeshBasicMaterial({
-  map: texture,
+  map: skyTexture,
   side: BackSide
 })
 

@@ -23,7 +23,7 @@ const state = {
   mouseMovementWhileDownY: 0.0,
 
   // world
-  sunBrightness: 0.4,
+  sunBrightness: 0.2,
   rotationSpeed: ROTATE_SPEED_MEDIUM,
 
   // structure manipulation

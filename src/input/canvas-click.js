@@ -11,34 +11,33 @@ const onNoObjectClick = (e) => {
 
 }
 
-const onObjectClick = (e) => {
+const onObjectClick = (object) => {
 
 }
 
 export default (e) => {
-  const intersects = findIntersectObjects(e)
-  const [intersect] = intersects
+  const [intersect] = findIntersectObjects(e)
 
-  if (!intersect) return onNoObjectClick(e)
+  if (intersect === undefined) return onNoObjectClick(e)
 
-  const {name} = intersect.object
+  const {object} = intersect
+  const {name} = object
   const {x, y, z} = intersect.point
+  const curBP = state.curStructBlueprint
 
-  // user is deleting a structure
-  if (name === 'structure' && state.curStructBlueprint === STRUCTURE_TYPE_DELETE) {
-    console.log(intersect.object.id)
-    return deleteStructure(intersect.object)
+  if (curBP === STRUCTURE_TYPE_DELETE) {
+    if (name === 'structure') {
+      return deleteStructure(object)
+    }
+
+    return
   }
 
   // user is placing a structure in the world
-  if (name === 'terrain' && state.curStructBlueprint !== STRUCTURE_TYPE_NONE) {
-    return addStructure(x, y, z, state.curStructBlueprint)
+  if (name === 'terrain' && curBP !== STRUCTURE_TYPE_NONE) {
+    return addStructure(x, y, z, curBP)
   }
 
   // user is selecting a preexisting object
-  for (let i = 0, l = intersects.length; i < l; i++) {
-    if (intersects[i].object.userData.isClickable === true) {
-      return onObjectClick(intersects[i].object)
-    }
-  }
+  return onObjectClick(intersect.object)
 }

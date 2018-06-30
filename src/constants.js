@@ -18,9 +18,6 @@ export const ROTATE_SPEED_SLOW = 1e-5
 export const ROTATE_SPEED_MEDIUM = 1e-4
 export const ROTATE_SPEED_FAST = 1e-3
 
-// events enum
-export const EVENT_RENDER_QUALITY = 0
-
 // storage enum
 export const STORED_RENDER_QUALITY = 0
 export const STORED_ROTATE_SPEED = 1
