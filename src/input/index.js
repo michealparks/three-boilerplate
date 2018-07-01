@@ -9,8 +9,7 @@ import state from '../state'
 import {toggleMove} from '../camera/input'
 import {playFrames, pauseFrames} from '../world/renderer'
 
-const {canvas, cursor} = window
-const {style} = cursor
+const {canvas} = window
 
 let startX = 0.0
 let startY = 0.0
@@ -63,10 +62,6 @@ const toggleInput = (inputCode, isDown) => {
     case 80: return togglePause()
   }
 }
-
-window.addEventListener('mousemove', ({clientX, clientY}) => {
-  style.transform = `translate(${clientX}px, ${clientY}px)`
-}, {passive: true})
 
 window.addEventListener('keydown', (e) =>
   toggleInput(e.keyCode, true),

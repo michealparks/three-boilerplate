@@ -17,13 +17,13 @@ import {
 } from 'three'
 
 import {COLOR_SUNLIGHT} from '../../constants'
+import renderer from '../../engine/renderer'
 import {lensFlareTextures} from '../../textures'
 import shader from './shader'
 import tempMap from './temp-map'
 import material1a from './material1a'
 import material1b from './material1b'
 
-const color = new Color(COLOR_SUNLIGHT)
 const sizes = [350, 60, 70, 150, 100]
 const distances = [0.0, 0.02, 0.1, 0.11, 0.2]
 
@@ -101,28 +101,41 @@ export const updateColors = (c) => {
   }
 }
 
-updateColors(color)
+updateColors(new Color(COLOR_SUNLIGHT))
 
-lensFlare.onBeforeRender = (renderer, scene, camera) => {
+let viewX, viewY, viewW, invAspect,
+  halfViewportWidth, halfViewportHeight, size
+
+const onResize = () => {
   const {x, y, z, w} = renderer.getCurrentViewport()
-  const invAspect = w / z
-  const halfViewportWidth = z / 2.0
-  const halfViewportHeight = w / 2.0
+  viewX = x
+  viewY = y
+  viewW = w
+  invAspect = w / z
+  halfViewportWidth = z / 2.0
+  halfViewportHeight = w / 2.0
+  size = 16 / w
 
-  const size = 16 / w
   scale.set(size * invAspect, size)
-
   validArea.min.set(x - 50, y - 50)
   validArea.max.set((x + (z - 16)) + 50, (y + (w - 16)) + 50)
 
+  m1aUniforms.scale.value = scale
+  m1bUniforms.scale.value = scale
+}
+
+window.addEventListener('resize', onResize)
+onResize()
+
+lensFlare.onBeforeRender = (renderer, scene, camera) => {
   // calculate position in screen space
   positionScreen.setFromMatrixPosition(lensFlare.matrixWorld)
   positionScreen.applyMatrix4(camera.matrixWorldInverse)
   positionScreen.applyMatrix4(camera.projectionMatrix)
 
   // horizontal and vertical coordinate of the lower left corner of the pixels to copy
-  screenPositionPixels.x = x + (positionScreen.x * halfViewportWidth) + halfViewportWidth - 8
-  screenPositionPixels.y = y + (positionScreen.y * halfViewportHeight) + halfViewportHeight - 8
+  screenPositionPixels.x = viewX + (positionScreen.x * halfViewportWidth) + halfViewportWidth - 8
+  screenPositionPixels.y = viewY + (positionScreen.y * halfViewportHeight) + halfViewportHeight - 8
 
   // screen cull
   if (!validArea.containsPoint(screenPositionPixels)) return
@@ -131,22 +144,18 @@ lensFlare.onBeforeRender = (renderer, scene, camera) => {
   renderer.copyFramebufferToTexture(screenPositionPixels, tempMap)
 
   // render pink quad
-  m1aUniforms.scale.value = scale
   m1aUniforms.screenPosition.value = positionScreen
 
   renderer.renderBufferDirect(
     camera, null, geometry, material1a, mesh1, null)
 
   // copy result to occlusionMap
-  renderer.copyFramebufferToTexture(
-    screenPositionPixels, occlusionMap)
+  renderer.copyFramebufferToTexture(screenPositionPixels, occlusionMap)
 
   // restore graphics
-  m1bUniforms.scale.value = scale
   m1bUniforms.screenPosition.value = positionScreen
 
-  renderer.renderBufferDirect(
-    camera, null, geometry, material1b, mesh1, null)
+  renderer.renderBufferDirect(camera, null, geometry, material1b, mesh1, null)
 
   // render elements
   const vecX = -positionScreen.x * 2
@@ -157,7 +166,7 @@ lensFlare.onBeforeRender = (renderer, scene, camera) => {
     uniforms.screenPosition.value.x = positionScreen.x + vecX * distances[i]
     uniforms.screenPosition.value.y = positionScreen.y + vecY * distances[i]
 
-    const size = sizes[i] / w
+    const size = sizes[i] / viewW
 
     uniforms.scale.value.set(size * invAspect, size)
 

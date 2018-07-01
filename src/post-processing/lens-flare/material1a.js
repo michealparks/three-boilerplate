@@ -1,30 +1,14 @@
 import {RawShaderMaterial} from 'three'
+import vertexShader from './shaders/material1a_vertex.glsl'
+import fragmentShader from './shaders/material1a_fragment.glsl'
 
 export default new RawShaderMaterial({
   uniforms: {
     scale: {value: null},
     screenPosition: {value: null}
   },
-  vertexShader: `
-    precision mediump float;
-    uniform vec3 screenPosition;
-    uniform vec2 scale;
-    attribute vec3 position;
-
-    void main() {
-      gl_Position = vec4(
-        position.xy * scale + screenPosition.xy,
-        screenPosition.z,
-        1.0
-      );
-    }
-  `,
-  fragmentShader: `
-    precision mediump float;
-    void main() {
-      gl_FragColor = vec4(1.0, 0.0, 1.0, 1.0);
-    }
-  `,
+  vertexShader,
+  fragmentShader,
   depthTest: true,
   depthWrite: false,
   transparent: false

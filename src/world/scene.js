@@ -2,7 +2,6 @@ import {Scene, AxesHelper} from 'three'
 import terrain from './terrain'
 import {lensFlare} from '../post-processing/lens-flare'
 import {sun, sunHelper, sunShadowHelper} from './sun'
-import {ambientLight} from './lights'
 import {cameraPivot} from '../camera'
 import earth from './earth'
 import earthClouds from './earth-clouds'
@@ -19,7 +18,6 @@ if (__dev__) {
 }
 
 scene.add(sky)
-scene.add(ambientLight)
 scene.add(sun)
 scene.add(earthSpotLight)
 scene.add(earth)

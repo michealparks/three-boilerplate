@@ -10,6 +10,7 @@ import {
 } from '../constants'
 
 import scene from '../world/scene'
+import loadGLTF from '../util/load-gltf'
 
 const MAX_METEORITES = 500
 const METEORITE_SEGMENTS = 4
@@ -20,6 +21,10 @@ const ry = new Float32Array(MAX_METEORITES)
 const rz = new Float32Array(MAX_METEORITES)
 
 let n = 0
+
+loadGLTF('public/assets/meteorite.gltf', (gltf) => {
+  console.log(gltf)
+})
 
 const material = new MeshPhongMaterial({
   color: COLOR_ROCK,

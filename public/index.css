@@ -18,8 +18,7 @@
 body, button, input {
   font-family: Bungee Hairline;
   font-size: 11px;
-  /* cursor: url('assets/cursor.svg'), default !important; */
-  cursor: none !important;
+  cursor: url('assets/cursor.svg'), default !important;
 }
 
 body {
