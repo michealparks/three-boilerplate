@@ -36,7 +36,7 @@ export const RENDER_QUALITY_BEAUTIFUL = 3
 // Colors
 export const COLOR_MOON = 0xA2A8AE
 export const COLOR_ROCK = 0x958D84
-export const COLOR_SUNLIGHT = 0xFAD6A5
+export const COLOR_SUNLIGHT = 0xffffff
 
 // Earth
 export const EARTH_RADIUS = 8
