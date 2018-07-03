@@ -32,7 +32,7 @@ void main() {
   vec2 sc = vec2(sin(vUv.y * sCount), cos(vUv.y * sCount));
 
   // add scanlines
-  cResult += cTextureScreen.rgb * vec3(sc.x, sc.y, sc.x) * sIntensity;
+  // cResult += cTextureScreen.rgb * vec3(sc.x, sc.y, sc.x) * sIntensity;
 
   // interpolate between source and result by intensity
   cResult = cTextureScreen.rgb + clamp(nIntensity, 0.0,1.0) * (cResult - cTextureScreen.rgb);

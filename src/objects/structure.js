@@ -50,5 +50,5 @@ export const addStructure = (x, y, z, type) => {
 export const deleteStructure = (object) => {
   structures.delete(object.id)
   scene.remove(object)
-  if (object.dispose) object.dispose()
+  if (object.dispose !== undefined) object.dispose()
 }

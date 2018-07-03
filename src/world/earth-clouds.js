@@ -47,4 +47,6 @@ const material = new MeshPhongMaterial({
 
 const earthClouds = new Mesh(geometry, material)
 
+earthClouds.name = 'earth clouds'
+
 export default earthClouds

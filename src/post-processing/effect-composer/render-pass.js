@@ -34,19 +34,19 @@ export default class RenderPass extends Pass {
 
     let oldClearColor, oldClearAlpha
 
-    if (this.clearColor) {
+    if (this.clearColor !== undefined) {
       oldClearColor = renderer.getClearColor().getHex()
       oldClearAlpha = renderer.getClearAlpha()
       renderer.setClearColor(this.clearColor, this.clearAlpha)
     }
 
-    if (this.clearDepth) {
+    if (this.clearDepth !== false) {
       renderer.clearDepth()
     }
 
     renderer.render(this.scene, this.camera, this.renderToScreen ? null : readBuffer, this.clear)
 
-    if (this.clearColor) {
+    if (this.clearColor !== undefined) {
       renderer.setClearColor(oldClearColor, oldClearAlpha)
     }
 

@@ -15,11 +15,6 @@ import {cameraPivot} from '../camera'
 const shadowCamera = sun.shadow.camera
 
 let theta = 0.0
-earth.position.x = earthClouds.position.x = -(SIZE_MAP / 2) - 10
-earth.position.z = earthClouds.position.z = -25
-earth.rotation.x = earthClouds.rotation.x = (80 * DEG2RAD)
-
-earthSpotLight.target = earth
 
 const sunZ = 30
 sun.position.z = sunZ

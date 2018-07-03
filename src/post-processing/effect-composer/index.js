@@ -24,6 +24,7 @@ export default class EffectComposer {
       format: RGBAFormat,
       stencilBuffer: false
     })
+
     target.texture.name = 'EffectComposer.rt1'
 
     this.renderTarget1 = target
@@ -54,6 +55,7 @@ export default class EffectComposer {
   }
 
   render (delta) {
+    // wtf is this variable
     let maskActive = false
     let il = this.passes.length
     let pass, i

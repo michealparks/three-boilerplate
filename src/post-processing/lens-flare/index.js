@@ -106,7 +106,7 @@ updateColors(new Color(COLOR_SUNLIGHT))
 let viewX, viewY, viewW, invAspect,
   halfViewportWidth, halfViewportHeight, size
 
-const onResize = () => {
+export const updateLensFlareScaling = () => {
   const {x, y, z, w} = renderer.getCurrentViewport()
   viewX = x
   viewY = y
@@ -124,8 +124,8 @@ const onResize = () => {
   m1bUniforms.scale.value = scale
 }
 
-window.addEventListener('resize', onResize)
-onResize()
+window.addEventListener('resize', updateLensFlareScaling)
+updateLensFlareScaling()
 
 lensFlare.onBeforeRender = (renderer, scene, camera) => {
   // calculate position in screen space

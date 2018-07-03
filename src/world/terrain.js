@@ -50,15 +50,17 @@ const geometry = new SphereBufferGeometry(
   Math.PI / 2
 )
 
-const vertices = new Float32Array(geometry.getAttribute('position').array)
+const vertices = geometry.getAttribute('position').array
+const heightMap = new Float32Array(vertices.length / 3)
 
 const SCALE = 0.01
-const FREQ = 1
-const ELEVATION_SCALE = 1
+const FREQ = 1.0
+const ELEVATION_SCALE = 1.5
 
-for (let i = 2, l = vertices.length; i < l; i += 3) {
-  const x = i % NUM_MAP_TILES
-  const y = Math.floor(i / NUM_MAP_TILES)
+for (let i = 2, j = 0, l = vertices.length; i < l; i += 3, j += 1) {
+  const x = i % (NUM_MAP_TILES + 2)
+  const y = Math.floor(i / (NUM_MAP_TILES + 2))
+
   const elevation = ELEVATION_SCALE * (
     FREQ * 1.000 * noise2D(FREQ * SCALE * x, FREQ * SCALE * y) +
     FREQ * 0.500 * noise2D(FREQ * 2 * SCALE * x, FREQ * 2 * SCALE * y) +
@@ -71,21 +73,17 @@ for (let i = 2, l = vertices.length; i < l; i += 3) {
   vertices[i] += scaledElevation
 
   if (scaledElevation !== 0) {
-    vertices[i + 0] += (Math.random() - 0.5) / 4
-    vertices[i + 1] += (Math.random() - 0.5) / 4
-    vertices[i + 2] += (Math.random() - 0.5) / 4
+    vertices[i - 2] += (Math.random() - 0.5) / 4
+    vertices[i - 1] += (Math.random() - 0.5) / 4
+    vertices[i - 0] += (Math.random() - 0.5) / 4
   } else {
-    vertices[i + 0] += (Math.random() - 0.5) / 20
-    vertices[i + 1] += (Math.random() - 0.5) / 20
-    vertices[i + 2] += (Math.random() - 0.5) / 20
+    vertices[i - 2] += (Math.random() - 0.5) / 20
+    vertices[i - 1] += (Math.random() - 0.5) / 20
+    vertices[i - 0] += (Math.random() - 0.5) / 20
   }
+
+  heightMap[j] = vertices[i + 2]
 }
-
-geometry.addAttribute('position', new BufferAttribute(vertices, 3))
-
-// Update geometry.
-geometry.computeVertexNormals()
-geometry.computeFaceNormals()
 
 // Create plane
 const plane = new Mesh(geometry, material)

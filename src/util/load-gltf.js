@@ -1,9 +1,8 @@
-// import {GLTFLoader} from 'three'
+import {GLTFLoader} from 'three/examples/js/loaders/GLTFLoader'
 
-// const loader = new GLTFLoader()
-// const load = loader.load.bind(loader)
+const loader = new GLTFLoader()
+const load = loader.load.bind(loader)
 
 export default (path, next) => {
-  return
   load(`${__root__}/${path}`, next)
 }

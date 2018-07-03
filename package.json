@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/michealparks/three-boilerplate#readme",
   "devDependencies": {
+    "@wildpeaks/three-webpack-plugin": "^2.0.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
     "babel-plugin-syntax-jsx": "^6.18.0",

@@ -79,10 +79,6 @@ window.addEventListener('wheel', ({deltaY}) => {
   wheelEndTimeoutID = setTimeout(toggleMove, 10, 0, 0, 0, 1, false)
 }, {passive: true})
 
-window.addEventListener('gamepadconnected', (e) => {
-  // TODO
-}, {passive: true})
-
 canvas.addEventListener('mousedown', ({which, clientX, clientY}) => {
   startX = lastX = clientX
   startY = lastY = clientY

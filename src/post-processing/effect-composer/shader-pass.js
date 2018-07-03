@@ -47,7 +47,7 @@ export default class ShaderPass extends Pass {
 
     this.quad.material = this.material
 
-    if (this.renderToScreen) {
+    if (this.renderToScreen === true) {
       renderer.render(this.scene, this.camera)
     } else {
       renderer.render(this.scene, this.camera, writeBuffer, this.clear)

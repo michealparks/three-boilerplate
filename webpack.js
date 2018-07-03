@@ -1,5 +1,6 @@
 const {resolve} = require('path')
 const webpack = require('webpack')
+const ThreeWebpackPlugin = require('@wildpeaks/three-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const __dev__ = process.env.NODE_ENV === 'development'
 
@@ -44,6 +45,7 @@ const config = {
   devtool: false,
   // devtool: __dev__ ? 'inline-source-map' : false,
   plugins: [
+    new ThreeWebpackPlugin(),
     new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.NamedModulesPlugin(),
     new webpack.DefinePlugin({

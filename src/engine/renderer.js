@@ -14,12 +14,14 @@ import {
 import {camera} from '../camera'
 import {clamp} from '../math'
 import storage from '../util/storage'
+import {updateLensFlareScaling} from '../post-processing/lens-flare'
 
 let resizeID = -1
 
 const renderer = new WebGLRenderer({
   canvas: window.canvas,
-  antialias: true
+  antialias: true,
+  powerPreference: 'high-performance'
 })
 
 export const render = renderer.render.bind(renderer)
@@ -27,6 +29,12 @@ export const render = renderer.render.bind(renderer)
 storage.get(STORED_RENDER_QUALITY, (quality) => {
   renderer.setPixelRatio(quality || clamp(window.devicePixelRatio / 2, 1, 2))
 })
+
+// TODO maybe remove
+renderer.autoClear = false
+renderer.autoClearColor = false
+renderer.autoClearDepth = false
+renderer.autoClearStencil = false
 
 renderer.shadowMap.enabled = true
 renderer.shadowMap.type = PCFSoftShadowMap
@@ -39,15 +47,21 @@ export const updateQuality = (quality) => {
   switch (quality) {
     case RENDER_QUALITY_BAD:
       val = 0.5; break
+
     case RENDER_QUALITY_DECENT:
       val = 1.0; break
+
     case RENDER_QUALITY_GOOD:
       val = 1.5; break
+
     case RENDER_QUALITY_BEAUTIFUL:
       val = 2.0; break
   }
 
   renderer.setPixelRatio(clamp(val, 0.5, window.devicePixelRatio))
+
+  updateLensFlareScaling()
+
   storage.set(STORED_RENDER_QUALITY, val)
 }
 
