@@ -12,7 +12,10 @@ const composer = new EffectComposer(renderer)
 
 composer.addPass(new RenderPass(scene, camera, {renderToScreen: false}))
 // composer.addPass(new FilmPass({renderToScreen: false}))
-composer.addPass(new BokehPass(scene, camera, {renderToScreen: true}))
+
+if (true || __win32__) {
+  composer.addPass(new BokehPass(scene, camera, {renderToScreen: true}))
+}
 
 const MsPF = (1 / 60) * 1000
 
