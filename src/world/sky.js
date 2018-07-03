@@ -5,16 +5,16 @@ import {
   BackSide
 } from 'three'
 
-import {SIZE_MAP} from '../constants'
+import {RADIUS_SKY_DOME} from '../constants'
 import {skyTexture} from '../textures'
+import scene from './scene'
 
 const geometry = new SphereBufferGeometry(
-  // Radius
-  SIZE_MAP * 2.2,
+  RADIUS_SKY_DOME,
   // Width segments
-  10,
+  20,
   // Height segments
-  10
+  20
 )
 
 const material = new MeshBasicMaterial({
@@ -23,5 +23,7 @@ const material = new MeshBasicMaterial({
 })
 
 const sky = new Mesh(geometry, material)
+
+scene.add(sky)
 
 export default sky

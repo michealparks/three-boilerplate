@@ -59,4 +59,4 @@ export const SIZE_MAP = NUM_MAP_TILES / 2
 export const SIZE_MAP_TILE = SIZE_MAP / NUM_MAP_TILES
 export const SIZE_SHADOW_MAP = 2 ** 12
 
-export const SIZE_SKY_DOME = SIZE_MAP * 2.2
+export const RADIUS_SKY_DOME = SIZE_MAP * 2

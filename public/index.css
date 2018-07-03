@@ -19,6 +19,7 @@ body, button, input {
   font-family: Bungee Hairline;
   font-size: 11px;
   cursor: url('assets/cursor.svg'), default !important;
+  line-height: 1.1em;
 }
 
 body {

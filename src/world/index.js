@@ -1,5 +1,6 @@
 import {
-  SIZE_MAP
+  SIZE_MAP,
+  RADIUS_SKY_DOME
 } from '../constants'
 
 import state from '../state'
@@ -21,14 +22,15 @@ sun.position.z = sunZ
 sun.rotation.x = -90 * DEG2RAD
 sun.rotation.z = -90 * DEG2RAD
 earthSpotLight.position.z = sunZ + 60
-lensFlare.position.z = (sunZ - 50)
+lensFlare.position.z = (sunZ - 150)
 
 const updateWorld = (delta) => {
   theta += (state.rotationSpeed)
 
   if (theta >= Math.PI * 2) theta = 0.0
 
-  sky.rotation.z = theta
+  sky.rotation.x = Math.PI / 3
+  sky.rotation.y = theta
   earth.rotation.y = (-theta * 8)
   earthClouds.rotation.y = (-theta * 16)
 
@@ -40,11 +42,14 @@ const updateWorld = (delta) => {
   shadowCamera.bottom = cy - 20
   shadowCamera.updateProjectionMatrix()
 
-  const x = SIZE_MAP / 2 * Math.cos(theta)
-  const y = SIZE_MAP / 2 * Math.sin(theta)
+  const x = SIZE_MAP * 1.9 * Math.cos(theta)
+  const y = SIZE_MAP * 1.9 * Math.sin(theta)
 
-  sun.position.x = earthSpotLight.position.x = lensFlare.position.x = x
-  sun.position.y = earthSpotLight.position.y = lensFlare.position.y = y
+  sun.position.x = lensFlare.position.x = x
+  sun.position.y = lensFlare.position.y = y
+
+  earthSpotLight.position.x = SIZE_MAP / 2 * Math.cos(theta)
+  earthSpotLight.position.y = SIZE_MAP / 2 * Math.sin(theta)
 }
 
 export default updateWorld

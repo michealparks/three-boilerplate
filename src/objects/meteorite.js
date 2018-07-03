@@ -4,12 +4,11 @@ import {
 } from '../constants'
 
 import {MeshPhongMaterial, Mesh} from 'three'
-import {clamp} from '../math'
 import scene from '../world/scene'
 import loadGLTF from '../util/load-gltf'
 
 const SIZE_MAP_HALF = SIZE_MAP / 2
-const NUM_METEORITES = 100
+const NUM_METEORITES = 400
 
 const meteorites = []
 const rotations = []
@@ -24,21 +23,18 @@ const vz = new Float32Array(NUM_METEORITES)
 let n = 0
 let geo
 
-loadGLTF('public/assets/meteorite.gltf', (gltf) => {
+loadGLTF('public/assets/meteorite_1.gltf', (gltf) => {
   const {geometry} = gltf.scene.children[0]
   geo = geometry
 
-  for (let i = 1; i < 100; i++) {
+  for (let i = 1; i < NUM_METEORITES; i++) {
     addMeteorite(
       // x
       (Math.random() * SIZE_MAP) - SIZE_MAP_HALF,
       // y
       (Math.random() * SIZE_MAP) - SIZE_MAP_HALF,
       // z
-      60,
-      // radius
-      clamp(Math.random() / 5.0, 0.05, 1)
-    )
+      60)
   }
 })
 
@@ -46,16 +42,13 @@ const material = new MeshPhongMaterial({
   color: COLOR_METEORITE,
   specular: COLOR_METEORITE,
   emissive: COLOR_METEORITE,
+  shininess: 100,
   flatShading: true
 })
 
-export const addMeteorite = (x, y, z, r) => {
+export const addMeteorite = (x, y, z) => {
   const mesh = new Mesh(geo, material)
   mesh.position.set(x, y, z)
-  mesh.scale.set(
-    ((Math.random() / 4.0) + 0.875) - 0.9,
-    ((Math.random() / 4.0) + 0.875) - 0.9,
-    ((Math.random() / 4.0) + 0.875) - 0.9)
   mesh.castShadow = true
   mesh.name = 'meteorite'
 

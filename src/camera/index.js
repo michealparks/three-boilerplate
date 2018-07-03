@@ -4,34 +4,33 @@ import {
 } from 'three'
 
 import {DEG2RAD} from '../math'
+import scene from '../world/scene'
 
-const radius = 5.0
+const FOV = 50
+const ASPECT_RATIO = window.innerWidth / window.innerHeight
+const NEAR_CLIP = 0.1
+const FAR_CLIP = 700
+const RADIUS = 5.0
 
 export const cameraPivot = new Group()
 cameraPivot.matrixAutoUpdate = false
-cameraPivot.userData.isClickable = false
 
 export const camera = new PerspectiveCamera(
-  // Field of view
-  50,
-  // Aspect ratio
-  window.innerWidth / window.innerHeight,
-  // Near clipping plane
-  0.1,
-  // Far clipping plane
-  600
-)
-
+  FOV,
+  ASPECT_RATIO,
+  NEAR_CLIP,
+  FAR_CLIP)
 camera.matrixAutoUpdate = false
-camera.userData.isClickable = false
 
 cameraPivot.add(camera)
 
 cameraPivot.position.set(0, 0, 4)
 camera.rotation.set(55 * DEG2RAD, 0, 0)
-camera.position.set(0, -radius, 0)
+camera.position.set(0, -RADIUS, 0)
 
 cameraPivot.updateMatrix()
 camera.updateMatrix()
+
+scene.add(cameraPivot)
 
 export default camera

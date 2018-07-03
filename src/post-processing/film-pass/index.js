@@ -27,7 +27,7 @@ export default class FilmPass extends Pass {
 
     const {
       grayscale = 0.0,
-      noiseIntensity = 0.1,
+      noiseIntensity = 0.08,
       scanlinesIntensity = 0.0,
       scanlinesCount = 4096,
       renderToScreen = false

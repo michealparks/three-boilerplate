@@ -1,8 +1,7 @@
 import {
   MeshPhongMaterial,
   Mesh,
-  SphereBufferGeometry,
-  BufferAttribute
+  SphereBufferGeometry
 } from 'three'
 
 import {
@@ -11,6 +10,7 @@ import {
   COLOR_MOON
 } from '../constants'
 
+import scene from './scene'
 import SimplexNoise from '../math/simplex-noise'
 
 const simplex = new SimplexNoise()
@@ -58,8 +58,8 @@ const FREQ = 1.0
 const ELEVATION_SCALE = 1.5
 
 for (let i = 2, j = 0, l = vertices.length; i < l; i += 3, j += 1) {
-  const x = i % (NUM_MAP_TILES + 2)
-  const y = Math.floor(i / (NUM_MAP_TILES + 2))
+  const x = i % (NUM_MAP_TILES + 1)
+  const y = Math.floor(i / (NUM_MAP_TILES + 1))
 
   const elevation = ELEVATION_SCALE * (
     FREQ * 1.000 * noise2D(FREQ * SCALE * x, FREQ * SCALE * y) +
@@ -85,16 +85,17 @@ for (let i = 2, j = 0, l = vertices.length; i < l; i += 3, j += 1) {
   heightMap[j] = vertices[i + 2]
 }
 
-// Create plane
-const plane = new Mesh(geometry, material)
+// Create terrain
+const terrain = new Mesh(geometry, material)
 
-plane.translateZ(-SIZE_MAP / 2)
-plane.updateMatrix()
-plane.name = 'terrain'
+terrain.translateZ(-SIZE_MAP / 2)
+terrain.updateMatrix()
+terrain.name = 'terrain'
 
 // Make static
-plane.matrixAutoUpdate = false
-plane.receiveShadow = true
-plane.userData.isClickable = false
+terrain.matrixAutoUpdate = false
+terrain.receiveShadow = true
 
-export default plane
+scene.add(terrain)
+
+export default terrain
