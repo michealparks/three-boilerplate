@@ -75,7 +75,7 @@ export const updateMeteorites = () => {
 
     r.x += rx[i]
     r.y += ry[i]
-    r.z += rz[i]
+    // r.z += rz[i]
 
     p.x += vx[i]
     p.y += vy[i]

@@ -173,7 +173,7 @@ const update = (renderer, scene, camera) => {
   }
 }
 
-window.addEventListener('resize', updateLensFlareScaling)
+window.addEventListener('resize', () => requestAnimationFrame(updateLensFlareScaling))
 updateLensFlareScaling()
 
 updateColors(new Color(COLOR_SUNLIGHT))

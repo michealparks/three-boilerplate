@@ -1,5 +1,7 @@
 import {
   STORED_ROTATE_SPEED,
+  STORED_IS_FULLSCREEN,
+  STORED_IS_MUSIC_ON,
   ROTATE_SPEED_MEDIUM,
   STRUCTURE_TYPE_NONE
 } from './constants'
@@ -10,7 +12,8 @@ const state = {
   isPaused: false,
 
   // settings
-  isFullscreen: false,
+  isFullscreen: get(STORED_IS_FULLSCREEN) || false,
+  isMusicOn: get(STORED_IS_MUSIC_ON) || true,
 
   // navigation
   isInHomeScreen: false,
@@ -24,15 +27,11 @@ const state = {
 
   // world
   sunBrightness: 0.2,
-  rotationSpeed: ROTATE_SPEED_MEDIUM,
+  rotationSpeed: get(STORED_ROTATE_SPEED) || ROTATE_SPEED_MEDIUM,
 
   // structure manipulation
   curStructBlueprint: STRUCTURE_TYPE_NONE,
   curStructure: STRUCTURE_TYPE_NONE
 }
-
-get(STORED_ROTATE_SPEED, (x) => {
-  if (x !== null) state.rotationSpeed = x
-})
 
 export default state

@@ -55,7 +55,7 @@ const heightMap = new Float32Array(vertices.length / 3)
 
 const SCALE = 0.01
 const FREQ = 1.0
-const ELEVATION_SCALE = 1.5
+const ELEVATION_SCALE = 1.25
 
 for (let i = 2, j = 0, l = vertices.length; i < l; i += 3, j += 1) {
   const x = i % (NUM_MAP_TILES + 1)
@@ -68,18 +68,17 @@ for (let i = 2, j = 0, l = vertices.length; i < l; i += 3, j += 1) {
     FREQ * 0.125 * noise2D(FREQ * 8 * SCALE * x, FREQ * 8 * SCALE * y)
   )
 
-  const scaledElevation = elevation < 0 ? 0 : elevation
-
-  vertices[i] += scaledElevation
-
-  if (scaledElevation !== 0) {
+  if (elevation > 0) {
+    vertices[i] += elevation
     vertices[i - 2] += (Math.random() - 0.5) / 4
     vertices[i - 1] += (Math.random() - 0.5) / 4
     vertices[i - 0] += (Math.random() - 0.5) / 4
   } else {
-    vertices[i - 2] += (Math.random() - 0.5) / 20
-    vertices[i - 1] += (Math.random() - 0.5) / 20
-    vertices[i - 0] += (Math.random() - 0.5) / 20
+    if (Math.random() > 0.75) {
+      vertices[i - 2] += (Math.random() - 0.5) / 16
+      vertices[i - 1] += (Math.random() - 0.5) / 16
+      vertices[i - 0] += (Math.random() - 0.5) / 16
+    }
   }
 
   heightMap[j] = vertices[i + 2]

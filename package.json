@@ -41,7 +41,7 @@
     "simplex-noise": "^2.4.0",
     "three": "^0.94.0",
     "uglifyjs-webpack-plugin": "^1.2.7",
-    "webpack": "^4.14.0"
+    "webpack": "^4.15.0"
   },
   "standard": {
     "globals": [

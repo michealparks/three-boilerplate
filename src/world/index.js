@@ -5,6 +5,7 @@ import {
 
 import state from '../state'
 import {DEG2RAD} from '../math'
+import updateAudio from '../audio'
 import sky from './sky'
 import sun from './sun'
 import earth from './earth'

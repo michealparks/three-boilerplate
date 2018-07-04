@@ -10,12 +10,9 @@ import updateWorld from '.'
 import {updateMeteorites} from '../objects/meteorite'
 const composer = new EffectComposer(renderer)
 
-composer.addPass(new RenderPass(scene, camera, {renderToScreen: false}))
+composer.addPass(new RenderPass(scene, camera, {renderToScreen: true}))
 // composer.addPass(new FilmPass({renderToScreen: false}))
-
-if (true || __win32__) {
-  composer.addPass(new BokehPass(scene, camera, {renderToScreen: true}))
-}
+// composer.addPass(new BokehPass(scene, camera, {renderToScreen: true}))
 
 const MsPF = (1 / 60) * 1000
 

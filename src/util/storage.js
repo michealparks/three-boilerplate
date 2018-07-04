@@ -1,5 +1,6 @@
 export const get = (key, next) => {
-  return next(JSON.parse(window.localStorage.getItem('data' + key)))
+  const val = JSON.parse(window.localStorage.getItem('n' + key))
+  return next !== undefined ? next(val) : val
 }
 
 export const set = (key, value, next) => {
