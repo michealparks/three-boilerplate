@@ -81,9 +81,9 @@ button {
 
 .menu button {
   width: 100%;
-  font-size: 30px;
+  padding: 10px;
+  font-size: 1.8em;
   font-weight: 800;
-  color: #999;
 }
 
 .controls {

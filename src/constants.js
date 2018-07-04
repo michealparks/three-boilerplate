@@ -23,9 +23,10 @@ export const STORED_RENDER_QUALITY = 0
 export const STORED_ROTATE_SPEED = 1
 
 // setting screens enum
-export const SCREEN_MENU = 0
-export const SCREEN_SETTINGS = 1
-export const SCREEN_INTRO = 2
+export const SCREEN_INTRO = 0
+export const SCREEN_MENU = 1
+export const SCREEN_SETTINGS = 2
+export const SCREEN_GRAPHICS = 3
 
 // rendering pixel ratio level enum
 export const RENDER_QUALITY_BAD = 0

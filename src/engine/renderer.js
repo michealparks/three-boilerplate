@@ -14,7 +14,6 @@ import {
 import {camera} from '../camera'
 import {clamp} from '../math'
 import storage from '../util/storage'
-// import {updateLensFlareScaling} from '../post-processing/lens-flare'
 
 let resizeID = -1
 
@@ -54,9 +53,6 @@ export const updateQuality = (quality) => {
   }
 
   renderer.setPixelRatio(clamp(val, 0.5, window.devicePixelRatio))
-
-  // updateLensFlareScaling()
-
   storage.set(STORED_RENDER_QUALITY, val)
 }
 
