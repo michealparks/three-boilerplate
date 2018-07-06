@@ -3,7 +3,7 @@ import state from '../state'
 import loadAudio from '../util/load-audio'
 import scene from '../world/scene'
 
-const NUM_SONGS = 6
+const NUM_SONGS = 9
 const buffers = new Map()
 const listener = new AudioListener()
 const sound = new Audio(listener)

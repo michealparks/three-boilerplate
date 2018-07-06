@@ -2,13 +2,7 @@ import {
   Mesh,
   MeshBasicMaterial,
   Vector3,
-  DataTexture,
-  RGBFormat,
-  NearestFilter,
-  ClampToEdgeWrapping,
-  RawShaderMaterial,
   Vector2,
-  AdditiveBlending,
   Box2,
   BufferGeometry,
   InterleavedBuffer,
@@ -20,7 +14,8 @@ import {COLOR_SUNLIGHT} from '../../constants'
 import renderer from '../../engine/renderer'
 import {lensFlareTextures as textures} from '../../textures'
 import scene from '../../world/scene'
-import shader from './shader'
+import onResize from '../../util/on-resize'
+import {occlusionMap, shader} from './shader'
 import tempMap from './temp-map'
 import material1a from './material1a'
 import material1b from './material1b'
@@ -44,35 +39,13 @@ geometry.addAttribute('uv', new InterleavedBufferAttribute(interleavedBuffer, 2,
 
 const material = new MeshBasicMaterial({opacity: 0, transparent: true})
 
-const occlusionMap = new DataTexture(new Uint8Array(16 * 16 * 3), 16, 16, RGBFormat)
-occlusionMap.minFilter = NearestFilter
-occlusionMap.magFilter = NearestFilter
-occlusionMap.wrapS = ClampToEdgeWrapping
-occlusionMap.wrapT = ClampToEdgeWrapping
-occlusionMap.needsUpdate = true
-
 // the following object is used for occlusionMap generation
 const mesh1 = new Mesh(geometry, material1a)
-const material2 = new RawShaderMaterial({
-  uniforms: {
-    map: {value: null},
-    occlusionMap: {value: occlusionMap},
-    color: {value: new Color(0xffffff)},
-    scale: {value: new Vector2()},
-    screenPosition: {value: new Vector3()}
-  },
-  vertexShader: shader.vertexShader,
-  fragmentShader: shader.fragmentShader,
-  blending: AdditiveBlending,
-  transparent: true,
-  depthWrite: false
-})
-
-const mesh2 = new Mesh(geometry, material2)
+const mesh2 = new Mesh(geometry, shader)
 const scale = new Vector2()
 const screenPositionPixels = new Vector2()
 const validArea = new Box2()
-const uniforms = material2.uniforms
+const uniforms = shader.uniforms
 
 export const lensFlare = new Mesh(geometry, material)
 lensFlare.type = lensFlare.name = 'Lensflare'
@@ -93,28 +66,29 @@ export const updateColors = (c) => {
   }
 }
 
-export const updateLensFlareScaling = () => {
-  const {x, y, z, w} = renderer.getCurrentViewport()
-  viewX = x
-  viewY = y
-  viewW = w
-  invAspect = w / z
-  halfViewportWidth = z / 2.0
-  halfViewportHeight = w / 2.0
-  size = 16 / w
+export const updateLensFlareScaling = () =>
+  requestAnimationFrame(() => {
+    const {x, y, z, w} = renderer.getCurrentViewport()
+    viewX = x
+    viewY = y
+    viewW = w
+    invAspect = w / z
+    halfViewportWidth = z / 2.0
+    halfViewportHeight = w / 2.0
+    size = 16 / w
 
-  scale.set(size * invAspect, size)
-  validArea.min.set(x - 50, y - 50)
-  validArea.max.set((x + (z - 16)) + 50, (y + (w - 16)) + 50)
+    scale.set(size * invAspect, size)
+    validArea.min.set(x - 50, y - 50)
+    validArea.max.set((x + (z - 16)) + 50, (y + (w - 16)) + 50)
 
-  m1aUniforms.scale.value = scale
-  m1bUniforms.scale.value = scale
-}
+    m1aUniforms.scale.value = scale
+    m1bUniforms.scale.value = scale
+  })
 
 export const dispose = () => {
   material1a.dispose()
   material1b.dispose()
-  material2.dispose()
+  shader.dispose()
 
   tempMap.dispose()
   occlusionMap.dispose()
@@ -167,13 +141,13 @@ const update = (renderer, scene, camera) => {
 
     uniforms.scale.value.set(size * invAspect, size)
 
-    material2.uniformsNeedUpdate = true
+    shader.uniformsNeedUpdate = true
 
-    renderer.renderBufferDirect(camera, null, geometry, material2, mesh2, null)
+    renderer.renderBufferDirect(camera, null, geometry, shader, mesh2, null)
   }
 }
 
-window.addEventListener('resize', () => requestAnimationFrame(updateLensFlareScaling))
+onResize(updateLensFlareScaling)
 updateLensFlareScaling()
 
 updateColors(new Color(COLOR_SUNLIGHT))

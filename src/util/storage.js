@@ -1,5 +1,7 @@
 export const get = (key, next) => {
   const val = JSON.parse(window.localStorage.getItem('n' + key))
+
+  console.log(key, val)
   return next !== undefined ? next(val) : val
 }
 
