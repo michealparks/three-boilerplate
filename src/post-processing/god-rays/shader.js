@@ -18,14 +18,14 @@
  * Sousa2008 - Crysis Next Gen Effects, GDC2008, http://www.crytek.com/sites/default/files/GDC08_SousaT_CrysisEffects.ppt
  */
 
-import depthMaskVertexShader from './depthmask_vertex.glsl'
+import depthMaskVertex from './depthmask_vertex.glsl'
 
 export default {
   godrays_depthMask: {
     uniforms: {
       tInput: {value: null}
     },
-    vertexShader: depthMaskVertexShader,
+    vertexShader: depthMaskVertex,
 
     fragmentShader: [
 

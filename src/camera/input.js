@@ -7,8 +7,7 @@ import {Matrix4} from 'three'
 import {camera, cameraPivot} from './index'
 import {DEG2RAD} from '../math'
 
-const rotateMatrix = new Matrix4()
-const translateMatrix = new Matrix4()
+const matrix = new Matrix4()
 
 let dx = 0.0
 let dy = 0.0
@@ -31,14 +30,14 @@ export const toggleMove = (x, y, r, z, isDown) => {
 
 export const updateCamera = () => {
   // TODO exit if not moving
-  camera.applyMatrix(rotateMatrix.makeRotationZ(camDr))
+  camera.applyMatrix(matrix.makeRotationZ(camDr))
   camDr += catchUp(dr, camDr)
 
   const {z} = camera.rotation
   const cosZ = Math.cos(z)
   const sinZ = Math.sin(z)
 
-  translateMatrix.set(
+  matrix.set(
     1, 0, 0, camDx * cosZ - camDy * sinZ,
     0, 1, 0, camDx * sinZ + camDy * cosZ,
     0, 0, 1, camDz,
@@ -49,7 +48,7 @@ export const updateCamera = () => {
   camDy += catchUp(dy, camDy)
   camDz += catchUp(dz, camDz)
 
-  cameraPivot.applyMatrix(translateMatrix)
+  cameraPivot.applyMatrix(matrix)
   cameraPivot.updateMatrix()
   camera.updateMatrix()
 }

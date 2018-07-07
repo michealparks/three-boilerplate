@@ -1,7 +1,9 @@
 import {Component, h} from 'preact'
 import {updateQuality} from '../engine/renderer'
 import {updateLensFlareScaling} from '../post-processing/lens-flare'
+import {toggleMusic} from '../audio'
 import state from '../state'
+import {set} from '../util/storage'
 
 import {
   SCREEN_MENU,
@@ -9,16 +11,24 @@ import {
   SCREEN_GRAPHICS,
   RENDER_QUALITY_DECENT,
   RENDER_QUALITY_GOOD,
-  RENDER_QUALITY_BEAUTIFUL
+  RENDER_QUALITY_BEAUTIFUL,
+  STORED_IS_FULLSCREEN,
+  STORED_IS_MUSIC_ON
 } from '../constants'
 
 export default class Menu extends Component {
   constructor (props) {
     super(props)
 
+    this.toggleFullscreen = this.toggleFullscreen.bind(this)
+    this.toggleIsMusicOn = this.toggleIsMusicOn.bind(this)
     this.navigateTo = this.navigateTo.bind(this)
 
-    this.state = {screen: SCREEN_MENU}
+    this.state = {
+      screen: SCREEN_MENU,
+      isFullscreen: state.isFullscreen,
+      isMusicOn: state.isMusicOn
+    }
   }
 
   onExit () {
@@ -26,9 +36,22 @@ export default class Menu extends Component {
     window.App_Quit()
   }
 
-  onFullscreen () {
-    state.isFullscreen = !state.isFullscreen
-    window.App_ToggleFullScreen(state.isFullscreen)
+  toggleFullscreen () {
+    const isFullscreen = !state.isFullscreen
+    state.isFullscreen = isFullscreen
+
+    this.setState({isFullscreen})
+    window.App_ToggleFullScreen(isFullscreen)
+    set(STORED_IS_FULLSCREEN, isFullscreen)
+  }
+
+  toggleIsMusicOn () {
+    const isMusicOn = !state.isMusicOn
+    state.isMusicOn = isMusicOn
+
+    this.setState({isMusicOn})
+    toggleMusic(isMusicOn)
+    set(STORED_IS_MUSIC_ON, isMusicOn)
   }
 
   updateRenderQuality (e) {
@@ -42,13 +65,12 @@ export default class Menu extends Component {
     this.setState({screen})
   }
 
-  render (props, {screen}) {
+  render (props, {screen, isFullscreen, isMusicOn}) {
     return (
       <div class='menu-overlay'>
         <div class='menu'>
           {screen === SCREEN_MENU &&
           <div>
-            <h1>moon</h1>
             <button id={SCREEN_SETTINGS} onClick={this.navigateTo}>
               preferences
             </button>
@@ -62,22 +84,25 @@ export default class Menu extends Component {
 
           {screen === SCREEN_SETTINGS &&
           <div>
-            <button onClick={this.onFullscreen}>
-              Fullscreen
+            <button onClick={this.toggleFullscreen}>
+              fullscreen {isFullscreen ? 'on' : 'off'}
+            </button>
+            <button onClick={this.toggleIsMusicOn}>
+              music {isMusicOn ? 'on' : 'off'}
             </button>
           </div>}
 
           {screen === SCREEN_GRAPHICS &&
           <div>
-            <p>Render quality</p>
+            <p>render quality</p>
             <button id={RENDER_QUALITY_DECENT} onClick={this.updateRenderQuality}>
-              Decent
+              decent
             </button>
             <button id={RENDER_QUALITY_GOOD} onClick={this.updateRenderQuality}>
-              Good
+              good
             </button>
             <button id={RENDER_QUALITY_BEAUTIFUL} onClick={this.updateRenderQuality}>
-              Beautiful
+              beautiful
             </button>
           </div>}
 

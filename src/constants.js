@@ -21,6 +21,8 @@ export const ROTATE_SPEED_FAST = 1e-3
 // storage enum
 export const STORED_RENDER_QUALITY = 0
 export const STORED_ROTATE_SPEED = 1
+export const STORED_IS_FULLSCREEN = 2
+export const STORED_IS_MUSIC_ON = 3
 
 // setting screens enum
 export const SCREEN_INTRO = 0

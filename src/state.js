@@ -1,38 +1,45 @@
 import {
   STORED_ROTATE_SPEED,
+  STORED_IS_FULLSCREEN,
+  STORED_IS_MUSIC_ON,
   ROTATE_SPEED_MEDIUM,
   STRUCTURE_TYPE_NONE
 } from './constants'
 
 import {get} from './util/storage'
 
-const state = {
-  isPaused: false,
+const init = () => {
+  const isFullscreen = get(STORED_IS_FULLSCREEN)
+  const isMusicOn = get(STORED_IS_MUSIC_ON)
+  const rotationSpeed = get(STORED_ROTATE_SPEED)
 
-  // settings
-  isFullscreen: false,
+  return {
+    isPaused: false,
 
-  // navigation
-  isInHomeScreen: false,
-  isInMenu: false,
+    // settings
+    isFullscreen: isFullscreen !== null ? isFullscreen : false,
+    isMusicOn: isMusicOn !== null ? isMusicOn : true,
 
-  // input
-  isLeftMouseDown: false,
-  isRightMouseDown: false,
-  mouseMovementWhileDownX: 0.0,
-  mouseMovementWhileDownY: 0.0,
+    // navigation
+    isInHomeScreen: false,
+    isInMenu: false,
 
-  // world
-  sunBrightness: 0.2,
-  rotationSpeed: ROTATE_SPEED_MEDIUM,
+    // input
+    isLeftMouseDown: false,
+    isRightMouseDown: false,
+    mouseMovementWhileDownX: 0.0,
+    mouseMovementWhileDownY: 0.0,
 
-  // structure manipulation
-  curStructBlueprint: STRUCTURE_TYPE_NONE,
-  curStructure: STRUCTURE_TYPE_NONE
+    // world
+    sunBrightness: 0.2,
+    rotationSpeed: rotationSpeed !== null ? rotationSpeed : ROTATE_SPEED_MEDIUM,
+
+    // structure manipulation
+    curStructBlueprint: STRUCTURE_TYPE_NONE,
+    curStructure: STRUCTURE_TYPE_NONE
+  }
 }
 
-get(STORED_ROTATE_SPEED, (x) => {
-  if (x !== null) state.rotationSpeed = x
-})
+const state = init()
 
 export default state

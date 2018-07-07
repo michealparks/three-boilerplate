@@ -10,11 +10,11 @@ export const lensFlareTextures = [
   loadTexture('public/assets/lensflare3.png', {anisotropy: maxAnisotropy})
 ]
 
-export const skyTexture = loadTexture('public/assets/milky-way.jpg')
+export const skyTexture = loadTexture('public/assets/space_2.png')
 skyTexture.wrapS = RepeatWrapping
 skyTexture.wrapT = RepeatWrapping
-skyTexture.repeat.x = 3 // 18
-skyTexture.repeat.y = 3 // 18
+skyTexture.repeat.x = 6
+skyTexture.repeat.y = 6
 
 // TODO: set in updateQuality()
 skyTexture.anisotropy = maxAnisotropy
