@@ -28,11 +28,10 @@
   "devDependencies": {
     "@wildpeaks/three-webpack-plugin": "^2.0.0",
     "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.4",
+    "babel-loader": "^7.1.5",
     "babel-plugin-syntax-jsx": "^6.18.0",
     "babel-plugin-transform-react-constant-elements": "^6.23.0",
     "babel-plugin-transform-react-jsx": "^6.24.1",
-    "babel-preset-minify": "^0.4.3",
     "cross-env": "^5.2.0",
     "electron": "^3.0.0-beta.1",
     "gl-matrix": "^2.6.1",
@@ -41,7 +40,7 @@
     "simplex-noise": "^2.4.0",
     "three": "^0.94.0",
     "uglifyjs-webpack-plugin": "^1.2.7",
-    "webpack": "^4.14.0"
+    "webpack": "^4.15.1"
   },
   "standard": {
     "globals": [

@@ -51,7 +51,7 @@ const geometry = new SphereBufferGeometry(
 )
 
 const vertices = geometry.getAttribute('position').array
-const heightMap = new Float32Array(vertices.length / 3)
+export const heightMap = new Float32Array(vertices.length / 3)
 
 const SCALE = 0.01
 const FREQ = 1.0

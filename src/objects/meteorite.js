@@ -6,6 +6,7 @@ import {
 import {MeshPhongMaterial, Mesh} from 'three'
 import scene from '../world/scene'
 import loadGLTF from '../util/load-gltf'
+import {heightMap} from '../world/terrain'
 
 const SIZE_MAP_HALF = SIZE_MAP / 2
 const NUM_METEORITES = 400
