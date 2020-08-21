@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "A three.js web app boilerplate",
   "scripts": {
-    "start": "cross-env NODE_ENV=production electron --js-flags=\"--use_strict\" src/electron/index",
-    "dev": "cross-env NODE_ENV=development electron --js-flags=\"--use_strict\" src/electron/index",
-    "webpack": "cross-env NODE_ENV=development node --use_strict webpack",
+    "electron-dev": "cross-env NODE_ENV=development electron --js-flags=\"--use_strict\" src/electron/index",
+    "electron-prod": "cross-env NODE_ENV=production electron --js-flags=\"--use_strict\" src/electron/index",
+    "start": "npm-run-all -s webpack -p electron-dev webpack-watch",
+    "webpack-watch": "cross-env NODE_ENV=development WATCH=true node --use_strict webpack",
+    "webpack": "cross-env NODE_ENV=development node webpack",
     "build": "cross-env NODE_ENV=production node --use-strict webpack"
   },
   "sideEffects": false,
@@ -26,22 +28,22 @@
   },
   "homepage": "https://github.com/michealparks/three-boilerplate#readme",
   "devDependencies": {
+    "@babel/core": "^7.11.4",
     "@wildpeaks/three-webpack-plugin": "^2.0.0",
-    "babel-core": "^6.26.3",
     "babel-loader": "^8.1.0",
     "babel-plugin-syntax-jsx": "^6.18.0",
     "babel-plugin-transform-react-constant-elements": "^6.23.0",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "cross-env": "^7.0.2",
-    "electron": "^8.2.3",
+    "electron": "^9.2.1",
     "gl-matrix": "^3.3.0",
     "glsl-minifier": "0.0.13",
     "npm-run-all": "^4.1.5",
-    "preact": "^10.4.0",
+    "preact": "^10.4.7",
     "simplex-noise": "^2.4.0",
-    "three": "^0.115.0",
+    "three": "^0.119.1",
     "uglifyjs-webpack-plugin": "^2.2.0",
-    "webpack": "^4.42.1"
+    "webpack": "^4.44.1"
   },
   "standard": {
     "globals": [

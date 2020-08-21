@@ -3,6 +3,7 @@ const webpack = require('webpack')
 const ThreeWebpackPlugin = require('@wildpeaks/three-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const __dev__ = process.env.NODE_ENV === 'development'
+const watch = process.env.WATCH
 
 const config = {
   target: 'electron-renderer',
@@ -89,7 +90,7 @@ const report = (err, stats) => {
   if (stats) console.log(stats.toString({chunks: false, colors: true}))
 }
 
-if (__dev__) {
+if (watch) {
   webpack(config).watch({ignored: /node_modules/}, report)
 } else {
   webpack(config).run(report)

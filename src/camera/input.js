@@ -30,7 +30,7 @@ export const toggleMove = (x, y, r, z, isDown) => {
 
 export const updateCamera = () => {
   // TODO exit if not moving
-  camera.applyMatrix(matrix.makeRotationZ(camDr))
+  camera.applyMatrix4(matrix.makeRotationZ(camDr))
   camDr += catchUp(dr, camDr)
 
   const {z} = camera.rotation
@@ -48,7 +48,7 @@ export const updateCamera = () => {
   camDy += catchUp(dy, camDy)
   camDz += catchUp(dz, camDz)
 
-  cameraPivot.applyMatrix(matrix)
+  cameraPivot.applyMatrix4(matrix)
   cameraPivot.updateMatrix()
   camera.updateMatrix()
 }

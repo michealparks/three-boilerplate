@@ -43,8 +43,10 @@ export default class MaskPass extends Pass {
     state.buffers.stencil.setClear(clearValue)
 
     // draw into the stencil buffer
-    renderer.render(this.scene, this.camera, readBuffer, this.clear)
-    renderer.render(this.scene, this.camera, writeBuffer, this.clear)
+    renderer.render(this.scene, this.camera, readBuffer)
+    renderer.clear()
+    renderer.render(this.scene, this.camera, writeBuffer)
+    renderer.clear()
 
     // unlock color and depth buffer for subsequent rendering
     state.buffers.color.setLocked(false)
